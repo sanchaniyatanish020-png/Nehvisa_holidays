@@ -1,0 +1,109 @@
+/* ---- STICKY BOTTOM ACTION BAR (Mobile Only) ---- */
+.mobile-action-bar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-action-bar {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(26, 31, 94, 0.1);
+    box-shadow: 0 -4px 20px rgba(26, 31, 94, 0.08);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    transform: translateY(100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+  }
+
+  .mobile-action-bar--visible {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-action-bar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 12px;
+    height: 60px;
+  }
+
+  .mobile-action-bar__btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    height: 44px;
+    min-height: 44px;
+    border-radius: var(--radius-full);
+    font-size: 13.5px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .mobile-action-bar__btn:active {
+    transform: scale(0.95);
+  }
+
+  /* Call button */
+  .mobile-action-bar__btn--call {
+    background: var(--color-light-gray);
+    color: var(--color-navy);
+    border: 1px solid rgba(26, 31, 94, 0.12);
+  }
+
+  /* WhatsApp button (Primary Hero) */
+  .mobile-action-bar__btn--wa {
+    flex: 1.25;
+    background: linear-gradient(135deg, #25d366 0%, #1ea952 100%);
+    color: var(--color-white);
+    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+  }
+
+  /* Enquire button */
+  .mobile-action-bar__btn--enquire {
+    background: var(--gradient-brand);
+    color: var(--color-white);
+    box-shadow: 0 4px 14px rgba(26, 31, 94, 0.2);
+  }
+}
+
+@media (max-width: 380px) {
+  .mobile-action-bar__inner {
+    padding: 6px 8px;
+    gap: 6px;
+  }
+
+  .mobile-action-bar__btn {
+    font-size: 12.5px;
+    gap: 5px;
+    padding: 0 8px;
+  }
+
+  .mobile-action-bar__btn svg {
+    width: 17px;
+    height: 17px;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .mobile-action-bar {
+    transition: opacity 0.1s ease;
+  }
+}

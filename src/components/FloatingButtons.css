@@ -1,0 +1,97 @@
+/* ---- FLOATING WHATSAPP BUTTON ---- */
+
+.floating-btns {
+  position: fixed;
+  bottom: 32px;
+  right: 28px;
+  z-index: var(--z-floating);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+  transition: opacity var(--transition-base), transform var(--transition-base);
+}
+
+.floating-btns--visible {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+/* position: relative ensures the ::after pulse stays contained to the button dimensions */
+.floating-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-white);
+  box-shadow: var(--shadow-xl);
+  transition: all var(--transition-base);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.floating-btn--wa {
+  background: linear-gradient(135deg, #25d366 0%, #1ea952 100%);
+  padding: 14px 20px;
+  box-shadow: 0 6px 24px rgba(37, 211, 102, 0.4);
+}
+
+.floating-btn--wa:hover {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 12px 36px rgba(37, 211, 102, 0.5);
+}
+
+.floating-btn__label {
+  white-space: nowrap;
+}
+
+/* Contained pulse animation on WhatsApp button */
+.floating-btn--wa::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(37, 211, 102, 0.5);
+  animation: waPulse 2.4s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+  z-index: -1;
+  pointer-events: none;
+}
+
+@keyframes waPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+/* ---- RESPONSIVE ---- */
+/* On mobile (<=768px), the sticky bottom action bar handles quick conversion.
+   If the action bar is hidden or screen is in between, keep button as 56px circular icon */
+@media (max-width: 768px) {
+  /* Hide the duplicate floating button on mobile in favor of the Sticky Bottom Action Bar */
+  .floating-btns {
+    display: none;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .floating-btn--wa::after {
+    animation: none !important;
+  }
+  .floating-btns {
+    transition: opacity 0.1s ease !important;
+  }
+}
