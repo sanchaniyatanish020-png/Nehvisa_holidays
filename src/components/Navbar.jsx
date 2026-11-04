@@ -22,15 +22,6 @@ export default function Navbar() {
       if (!ticking) {
         window.requestAnimationFrame(() => {
           setScrolled(window.scrollY > 60);
-
-          const sections = navLinks.map((l) => l.href.replace('#', ''));
-          for (let i = sections.length - 1; i >= 0; i--) {
-            const el = document.getElementById(sections[i]);
-            if (el && window.scrollY >= el.offsetTop - 120) {
-              setActiveSection(sections[i]);
-              break;
-            }
-          }
           ticking = false;
         });
         ticking = true;
@@ -38,6 +29,28 @@ export default function Navbar() {
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Track active section via zero-reflow IntersectionObserver
+  useEffect(() => {
+    const sections = navLinks.map((l) => l.href.replace('#', ''));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: '-20% 0px -70% 0px', threshold: 0 }
+    );
+
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {

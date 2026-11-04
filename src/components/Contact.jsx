@@ -39,6 +39,8 @@ function ContactCard({ icon, title, value, btnText, btnHref, btnId, target }) {
 
 export default function Contact() {
   const ref = useRef(null);
+  const mapWrapRef = useRef(null);
+  const [loadMap, setLoadMap] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -115,6 +117,23 @@ export default function Contact() {
       { threshold: 0.1 }
     );
     ref.current?.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  // Defer Google Maps iframe until user scrolls near the map container
+  useEffect(() => {
+    const el = mapWrapRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setLoadMap(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '350px' }
+    );
+    observer.observe(el);
     return () => observer.disconnect();
   }, []);
 
@@ -425,17 +444,19 @@ export default function Contact() {
               Open in Google Maps
             </a>
           </div>
-          <div className="contact__map-wrap">
-            <iframe
-              title="Nehvisa Holidays Office Location - 204 Infinity Business Hub Surat"
-              src="https://maps.google.com/maps?q=204%2C%20Infinity%20Business%20Hub%2C%20Palanpor%20Canal%20Road%2C%20Palanpor%2C%20Surat%2C%20Gujarat%20395009&t=&z=15&ie=UTF8&iwloc=&output=embed"
-              width="100%"
-              height="420"
-              style={{ border: 0, display: 'block' }}
-              allowFullScreen=""
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
+          <div className="contact__map-wrap" ref={mapWrapRef} style={{ minHeight: '420px', background: '#e2e8f0' }}>
+            {loadMap ? (
+              <iframe
+                title="Nehvisa Holidays Office Location - 204 Infinity Business Hub Surat"
+                src="https://maps.google.com/maps?q=204%2C%20Infinity%20Business%20Hub%2C%20Palanpor%20Canal%20Road%2C%20Palanpor%2C%20Surat%2C%20Gujarat%20395009&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                width="100%"
+                height="420"
+                style={{ border: 0, display: 'block' }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            ) : null}
           </div>
           <div className="contact__address-bar">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">

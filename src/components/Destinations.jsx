@@ -118,8 +118,11 @@ function DestinationCard({ dest, index }) {
 export default function Destinations() {
   const [activeTab, setActiveTab] = useState('all');
   const [isPaused, setIsPaused] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+  const sectionRef = useRef(null);
   const trackRef = useRef(null);
   const offsetRef = useRef(0);
+  const halfWidthRef = useRef(0);
   const animFrameRef = useRef(null);
   const isPausedRef = useRef(false);
   const touchStartX = useRef(null);
@@ -128,6 +131,20 @@ export default function Destinations() {
   useEffect(() => {
     isPausedRef.current = isPaused;
   }, [isPaused]);
+
+  // Observer to pause animation completely when destinations section is off-screen
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const filtered = destinations.filter((dest) => {
     if (activeTab === 'all') return true;
@@ -150,25 +167,38 @@ export default function Destinations() {
   }
   const duplicatedList = [...singleHalf, ...singleHalf];
 
-  // Reset offset when category tab changes
+  // Cache halfWidth and reset offset when category tab changes (avoids 60fps layout thrashing)
   useEffect(() => {
     offsetRef.current = 0;
     if (trackRef.current) {
       trackRef.current.style.transform = `translate3d(0, 0, 0)`;
+      // Measure once per tab switch instead of every frame
+      requestAnimationFrame(() => {
+        if (trackRef.current) {
+          halfWidthRef.current = trackRef.current.scrollWidth / 2;
+        }
+      });
     }
   }, [activeTab]);
 
-  // Continuous animation loop using requestAnimationFrame (pauses when hovered)
+  // Continuous animation loop: only runs when in viewport and not paused
   useEffect(() => {
     const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) return;
+    if (prefersReduced || !isInView) {
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+      return;
+    }
 
-    const speed = 0.85; // smooth luxury glide speed (~50px per second)
+    if (!halfWidthRef.current && trackRef.current) {
+      halfWidthRef.current = trackRef.current.scrollWidth / 2;
+    }
+
+    const speed = 0.85;
 
     const step = () => {
       if (!isPausedRef.current && trackRef.current) {
         offsetRef.current += speed;
-        const halfWidth = trackRef.current.scrollWidth / 2;
+        const halfWidth = halfWidthRef.current;
         if (halfWidth > 0 && offsetRef.current >= halfWidth) {
           offsetRef.current -= halfWidth;
         }
@@ -184,7 +214,7 @@ export default function Destinations() {
         cancelAnimationFrame(animFrameRef.current);
       }
     };
-  }, [activeTab]);
+  }, [activeTab, isInView]);
 
   const handlePrev = () => {
     offsetRef.current -= 360;
@@ -237,7 +267,7 @@ export default function Destinations() {
   };
 
   return (
-    <section id="destinations" className="destinations section" aria-labelledby="destinations-heading">
+    <section id="destinations" className="destinations section" ref={sectionRef} aria-labelledby="destinations-heading">
       <div className="container">
         <header className="section-header">
           <p className="section-label">Where We Travel</p>

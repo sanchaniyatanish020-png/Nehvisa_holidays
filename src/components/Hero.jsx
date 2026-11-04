@@ -236,9 +236,10 @@ export default function Hero() {
       </div>
 
       {/* Classic Mouse Scroll Indicator */}
-      <div
+      <button
         className="hero__scroll-hint"
-        aria-hidden="true"
+        type="button"
+        aria-label="Scroll down to About section"
         onClick={() => {
           document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
         }}
@@ -246,7 +247,7 @@ export default function Hero() {
         <span className="hero__scroll-mouse">
           <span className="hero__scroll-wheel" />
         </span>
-      </div>
+      </button>
     </section>
   );
 }
