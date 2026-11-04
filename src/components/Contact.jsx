@@ -3,6 +3,18 @@ import businessInfo from '../data/businessInfo';
 import destinations from '../data/destinations';
 import './Contact.css';
 
+/** Format ISO date string (2026-12-15) → "15 December 2026" for messages */
+function formatDate(isoDate) {
+  if (!isoDate) return 'Flexible';
+  try {
+    return new Date(isoDate).toLocaleDateString('en-IN', {
+      day: 'numeric', month: 'long', year: 'numeric'
+    });
+  } catch {
+    return isoDate;
+  }
+}
+
 function ContactCard({ icon, title, value, btnText, btnHref, btnId, target }) {
   return (
     <div className="contact-card fade-up">
@@ -32,11 +44,55 @@ export default function Contact() {
     phone: '',
     destination: 'Dubai',
     tourType: 'International Tour Package',
-    travelers: '2 Adults (Couple)',
     travelDate: '',
     notes: '',
   });
+  const [adults, setAdults] = useState('2');
+  const [children, setChildren] = useState('0');
+  const [childAges, setChildAges] = useState([]);
   const [phoneError, setPhoneError] = useState('');
+
+  const handleChildrenChange = (e) => {
+    const count = parseInt(e.target.value, 10) || 0;
+    setChildren(String(count));
+    setChildAges((prev) => {
+      const newAges = [...prev];
+      if (count > newAges.length) {
+        for (let i = newAges.length; i < count; i++) {
+          newAges.push('5 Years');
+        }
+      } else {
+        newAges.length = count;
+      }
+      return newAges;
+    });
+  };
+
+  const handleChildAgeChange = (index, age) => {
+    setChildAges((prev) => {
+      const updated = [...prev];
+      updated[index] = age;
+      return updated;
+    });
+  };
+
+  const getTravelersSummary = () => {
+    const adultNum = parseInt(adults, 10) || 1;
+    const childNum = parseInt(children, 10) || 0;
+    const adultText = `${adultNum} ${adultNum === 1 ? 'Adult' : 'Adults'}`;
+
+    if (childNum === 0) {
+      return adultText;
+    }
+
+    const childText = `${childNum} ${childNum === 1 ? 'Child' : 'Children'}`;
+    const agesList = childAges
+      .slice(0, childNum)
+      .map((age, i) => `Child ${i + 1}: ${age || '5 Years'}`)
+      .join(', ');
+
+    return `${adultText}, ${childText} (${agesList})`;
+  };
 
   // Listen for destination preselection from Destination cards
   useEffect(() => {
@@ -95,8 +151,8 @@ export default function Contact() {
       `📞 *Phone:* ${formData.phone || 'Not specified'}\n` +
       `✈️ *Destination:* ${formData.destination}\n` +
       `🏷️ *Type:* ${formData.tourType}\n` +
-      `👥 *Travelers:* ${formData.travelers}\n` +
-      `📅 *Tentative Date/Month:* ${formData.travelDate || 'Flexible'}\n` +
+      `👥 *Travelers:* ${getTravelersSummary()}\n` +
+      `📅 *Tentative Date/Month:* ${formatDate(formData.travelDate)}\n` +
       (formData.notes ? `📝 *Notes:* ${formData.notes}\n` : '');
 
     const url = `${businessInfo.whatsappLink}?text=${encodeURIComponent(msg)}`;
@@ -120,8 +176,8 @@ export default function Contact() {
       `Phone: ${formData.phone}\n` +
       `Destination: ${formData.destination}\n` +
       `Tour Type: ${formData.tourType}\n` +
-      `Number of Travelers: ${formData.travelers}\n` +
-      `Tentative Date/Month: ${formData.travelDate}\n` +
+      `Number of Travelers: ${getTravelersSummary()}\n` +
+      `Tentative Date/Month: ${formatDate(formData.travelDate)}\n` +
       `Special Requests: ${formData.notes}\n\n` +
       `Looking forward to hearing from you!`;
 
@@ -163,6 +219,7 @@ export default function Contact() {
                   type="text"
                   name="name"
                   autoComplete="name"
+                  enterKeyHint="next"
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="e.g. Rahul Sharma"
@@ -178,6 +235,7 @@ export default function Contact() {
                   name="phone"
                   inputMode="tel"
                   autoComplete="tel"
+                  enterKeyHint="next"
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="e.g. 98765 43210 or +91 98765 43210"
@@ -219,38 +277,89 @@ export default function Contact() {
                   onChange={handleChange}
                 >
                   <option value="International Tour Package">International Tour Package</option>
-                  <option value="Domestic / India Tour">Domestic / India Tour</option>
-                  <option value="Char Dham / Spiritual Yatra">Char Dham / Spiritual Yatra</option>
                   <option value="Flight & Hotel Booking">Flight & Hotel Booking</option>
                   <option value="Family Vacation">Family Vacation</option>
                   <option value="Group Tour">Group Tour</option>
                 </select>
               </div>
 
+              {/* Adults portion (1 to 9) */}
               <div className="planner__group">
-                <label htmlFor="planner-travelers">Travelers</label>
+                <label htmlFor="planner-adults">Adults (12+ Years)</label>
                 <select
-                  id="planner-travelers"
-                  name="travelers"
-                  value={formData.travelers}
-                  onChange={handleChange}
+                  id="planner-adults"
+                  name="adults"
+                  value={adults}
+                  onChange={(e) => setAdults(e.target.value)}
                 >
-                  <option value="1 Solo Traveler">Solo Traveler</option>
-                  <option value="2 Adults (Couple)">2 Adults (Couple)</option>
-                  <option value="Family (3-5 people)">Family (3-5 people)</option>
-                  <option value="Group (6+ people)">Group (6+ people)</option>
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
+                    <option key={num} value={num}>
+                      {num} {num === 1 ? 'Adult' : 'Adults'}
+                    </option>
+                  ))}
                 </select>
               </div>
 
+              {/* Child portion (0 to 9) */}
               <div className="planner__group">
-                <label htmlFor="planner-date">Approximate Travel Month / Date</label>
+                <label htmlFor="planner-children">Child (1 to 12 Years)</label>
+                <select
+                  id="planner-children"
+                  name="children"
+                  value={children}
+                  onChange={handleChildrenChange}
+                >
+                  <option value="0">0 Child (None)</option>
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
+                    <option key={num} value={num}>
+                      {num} {num === 1 ? 'Child' : 'Children'}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Dynamic Child Age dropdown(s) if child selected (1 to 12 years) */}
+              {parseInt(children, 10) > 0 && (
+                <div className="planner__child-ages-container planner__group--full">
+                  <div className="planner__child-ages-header">
+                    <span className="planner__child-ages-icon" aria-hidden="true">👶</span>
+                    <span className="planner__child-ages-title">
+                      Age of Child ({parseInt(children, 10) === 1 ? 'Select Age (1 - 12 Years)' : 'Select Age for Each Child (1 - 12 Years)'}):
+                    </span>
+                  </div>
+                  <div className="planner__child-ages-grid">
+                    {Array.from({ length: parseInt(children, 10) }).map((_, i) => (
+                      <div key={i} className="planner__child-age-field">
+                        <label htmlFor={`child-age-${i}`}>
+                          Child {i + 1} Age
+                        </label>
+                        <select
+                          id={`child-age-${i}`}
+                          value={childAges[i] || '5 Years'}
+                          onChange={(e) => handleChildAgeChange(i, e.target.value)}
+                        >
+                          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((age) => (
+                            <option key={age} value={`${age} ${age === 1 ? 'Year' : 'Years'}`}>
+                              {age} {age === 1 ? 'Year' : 'Years'}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="planner__group">
+                <label htmlFor="planner-date">📅 Approximate Travel Date</label>
                 <input
                   id="planner-date"
-                  type="text"
+                  type="date"
                   name="travelDate"
                   value={formData.travelDate}
                   onChange={handleChange}
-                  placeholder="e.g. Next Month / Diwali Holidays"
+                  min={new Date().toISOString().split('T')[0]}
+                  style={{ cursor: 'pointer' }}
                 />
               </div>
 
@@ -260,6 +369,7 @@ export default function Contact() {
                   id="planner-notes"
                   name="notes"
                   rows="2"
+                  enterKeyHint="done"
                   value={formData.notes}
                   onChange={handleChange}
                   placeholder="Any preferences for hotel type, specific sights, budget, or flight arrangements..."
@@ -295,77 +405,6 @@ export default function Contact() {
           </form>
         </div>
 
-        {/* Contact Cards */}
-        <div className="contact__cards">
-          <ContactCard
-            icon={
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.66A2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92"/>
-              </svg>
-            }
-            title="Phone"
-            value={businessInfo.phone}
-            btnText="Call Now"
-            btnHref={businessInfo.phoneLink}
-            btnId="contact-call-btn"
-          />
-          <ContactCard
-            icon={
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-                <path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.119 1.532 5.849L.057 23.7a.5.5 0 0 0 .623.624l5.85-1.474A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.796 9.796 0 0 1-5.126-1.447l-.368-.218-3.822.963.981-3.72-.239-.384A9.792 9.792 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/>
-              </svg>
-            }
-            title="WhatsApp"
-            value={businessInfo.whatsapp}
-            btnText="Chat on WhatsApp"
-            btnHref={waUrl}
-            btnId="contact-whatsapp-btn"
-            target="_blank"
-          />
-          <ContactCard
-            icon={
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                <polyline points="22,6 12,13 2,6"/>
-              </svg>
-            }
-            title="Email"
-            value={businessInfo.email}
-            btnText="Email Us"
-            btnHref={businessInfo.emailLink}
-            btnId="contact-email-btn"
-          />
-          <ContactCard
-            icon={
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                <circle cx="12" cy="10" r="3"/>
-              </svg>
-            }
-            title="Office"
-            value={`${address.line1} ${address.line2} ${address.line3} ${address.line4}`}
-            btnText="Get Directions"
-            btnHref={businessInfo.mapsLink}
-            btnId="contact-directions-btn"
-            target="_blank"
-          />
-        </div>
-
-        {/* Office Hours */}
-        <div className="contact__hours fade-up">
-          <div className="contact__hours-icon" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="12" cy="12" r="10"/>
-              <polyline points="12 6 12 12 16 14"/>
-            </svg>
-          </div>
-          <div>
-            <h3 className="contact__hours-title">Office Hours</h3>
-            <p className="contact__hours-detail">{businessInfo.hours.days}</p>
-            <p className="contact__hours-detail">{businessInfo.hours.time}</p>
-          </div>
-        </div>
 
         {/* Map */}
         <div className="contact__map fade-up">
@@ -407,31 +446,6 @@ export default function Contact() {
               {address.line1} {address.line2} {address.line3} {address.line4}
             </address>
           </div>
-        </div>
-
-        {/* Instagram CTA */}
-        <div className="contact__instagram fade-up">
-          <div className="contact__instagram-icon" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-              <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
-              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-            </svg>
-          </div>
-          <div className="contact__instagram-text">
-            <p className="contact__instagram-handle">{businessInfo.instagram.handle}</p>
-            <p className="contact__instagram-sub">Follow us for travel updates and inspiration</p>
-          </div>
-          <a
-            href={businessInfo.instagram.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn contact__instagram-btn"
-            id="contact-instagram-btn"
-            aria-label="Follow Nehvisa Holidays on Instagram"
-          >
-            Follow Us on Instagram
-          </a>
         </div>
       </div>
     </section>

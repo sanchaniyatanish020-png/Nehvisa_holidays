@@ -3,7 +3,7 @@ const businessInfo = {
   name: 'Nehvisa Holidays',
   tagline: 'We are professional planners for your vacations!',
   about:
-    'Nehvisa Holidays is dedicated to helping travelers plan memorable journeys across India and around the world. We create domestic and international holiday packages according to customers\' requirements, with a focus on making travel planning simple, comfortable and personalized.',
+    'Nehvisa Holidays is dedicated to helping travelers plan memorable journeys around the world. We create personalized international holiday packages according to customers\' requirements, with a focus on making travel planning simple, comfortable and personalized.',
   phone: '+91 82005 18010',
   phoneLink: 'tel:+918200518010',
   whatsapp: '+91 82005 18010',
@@ -31,13 +31,13 @@ const businessInfo = {
   stats: [
     {
       id: 'travelers',
-      number: '500+', // TODO: Replace with verified number of travelers served
+      number: '4500+',
       label: 'Happy Travelers',
     },
     {
       id: 'destinations',
-      number: '7+', // Updated from 50+ to match the actual destinations catalog on site
-      label: 'Featured Destinations', // TODO: Update as you expand tour catalog
+      number: '47+',
+      label: 'Featured Destinations',
     },
     {
       id: 'customization',
@@ -46,13 +46,17 @@ const businessInfo = {
     },
     {
       id: 'support',
-      number: '10 AM - 7 PM', // Updated from 24/7 to match actual operational hours
+      number: '24 Hours',
       label: 'Daily Trip Support',
     },
   ],
   instagram: {
     handle: '@nehvisa_holidays',
     link: 'https://www.instagram.com/nehvisa_holidays/',
+  },
+  facebook: {
+    name: 'Nehvisa Holidays',
+    link: 'https://www.facebook.com/share/1HejT4jksg/',
   },
   copyright: '© 2026 Nehvisa Holidays. All Rights Reserved.',
 };

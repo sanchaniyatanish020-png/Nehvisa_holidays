@@ -1,13 +1,5 @@
 const services = [
   {
-    id: 1,
-    icon: '🇮🇳',
-    title: 'Domestic Tours',
-    description:
-      'Discover memorable destinations across India with travel plans designed around your requirements.',
-    svgIcon: 'domestic',
-  },
-  {
     id: 2,
     icon: '🌍',
     title: 'International Tours',

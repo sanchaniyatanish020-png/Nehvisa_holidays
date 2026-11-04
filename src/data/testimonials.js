@@ -23,7 +23,7 @@ export const testimonials = [
     id: 2,
     name: '[Client Name]', // TODO: Add real traveler name
     location: 'Surat, Gujarat',
-    destination: 'Char Dham Yatra',
+    destination: 'Vietnam Holiday Package',
     rating: 5,
     text: 'TODO: Replace with verified client quote regarding their tour experience with Nehvisa Holidays.',
     year: '2026',

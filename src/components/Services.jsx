@@ -4,12 +4,6 @@ import './Services.css';
 
 const ServiceIcon = ({ type }) => {
   const icons = {
-    domestic: (
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
-        <polyline points="9 22 9 12 15 12 15 22"/>
-      </svg>
-    ),
     international: (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
         <circle cx="12" cy="12" r="10"/>

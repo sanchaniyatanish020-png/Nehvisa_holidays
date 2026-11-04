@@ -17,17 +17,23 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setScrolled(window.scrollY > 60);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 60);
 
-      // Determine active section
-      const sections = navLinks.map((l) => l.href.replace('#', ''));
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sections[i]);
-        if (el && window.scrollY >= el.offsetTop - 120) {
-          setActiveSection(sections[i]);
-          break;
-        }
+          const sections = navLinks.map((l) => l.href.replace('#', ''));
+          for (let i = sections.length - 1; i >= 0; i--) {
+            const el = document.getElementById(sections[i]);
+            if (el && window.scrollY >= el.offsetTop - 120) {
+              setActiveSection(sections[i]);
+              break;
+            }
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -66,9 +72,12 @@ export default function Navbar() {
             aria-label="Nehvisa Holidays - Go to top"
           >
             <img
-              src={scrolled || menuOpen ? '/logo.png' : '/logo-white.png'}
+              src={scrolled || menuOpen ? `${import.meta.env.BASE_URL}logo.png` : `${import.meta.env.BASE_URL}logo-white.png`}
               alt="Nehvisa Holidays"
               className="navbar__logo-img"
+              width="174"
+              height="48"
+              decoding="async"
             />
           </a>
 

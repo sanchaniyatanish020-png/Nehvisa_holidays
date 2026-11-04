@@ -9,7 +9,6 @@ import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import FloatingButtons from './components/FloatingButtons';
-import MobileActionBar from './components/MobileActionBar';
 
 export default function App() {
   return (
@@ -26,8 +25,6 @@ export default function App() {
       </main>
       <Footer />
       <FloatingButtons />
-      <MobileActionBar />
     </>
   );
 }
-

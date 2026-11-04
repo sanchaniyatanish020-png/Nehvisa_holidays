@@ -66,6 +66,17 @@
     gap: 16px;
   }
   .testimonial-card {
-    padding: 22px 18px;
+    padding: 24px 20px;
+    border-radius: var(--radius-md);
+  }
+  .testimonial-card__text {
+    font-size: 0.98rem;
+    line-height: 1.65;
+  }
+  .testimonial-card__name {
+    font-size: 1rem;
+  }
+  .testimonial-card__meta {
+    font-size: 0.88rem;
   }
 }

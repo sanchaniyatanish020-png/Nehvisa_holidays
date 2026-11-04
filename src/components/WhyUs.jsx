@@ -22,8 +22,8 @@ const reasons = [
         <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
       </svg>
     ),
-    title: 'Domestic & International Travel',
-    desc: 'Travel assistance across India and international destinations.',
+    title: 'International Travel Planning',
+    desc: 'Expert assistance across curated international destinations.',
   },
   {
     id: 3,
@@ -87,6 +87,21 @@ export default function WhyUs() {
     setActiveSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
   };
 
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    const sectionEl = ref.current;
+    if (!sectionEl) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(sectionEl);
+    return () => observer.disconnect();
+  }, []);
+
   const goToSlide = (idx) => {
     setActiveSlide(idx);
     resetAutoPlay();
@@ -94,19 +109,24 @@ export default function WhyUs() {
 
   const resetAutoPlay = () => {
     if (timerRef.current) clearInterval(timerRef.current);
+    if (!isInView) return;
     timerRef.current = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % reasons.length);
     }, 4500);
   };
 
   useEffect(() => {
+    if (!isInView) {
+      if (timerRef.current) clearInterval(timerRef.current);
+      return;
+    }
     timerRef.current = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % reasons.length);
     }, 4500);
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, []);
+  }, [isInView]);
 
   const handleTouchStart = (e) => {
     touchStartX.current = e.targetTouches[0].clientX;

@@ -98,6 +98,24 @@
   transition: all var(--transition-fast);
 }
 
+/* Date input special styling */
+.planner__group input[type="date"] {
+  cursor: pointer;
+  color: var(--color-text);
+  min-height: 52px;
+}
+
+.planner__group input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.7;
+  filter: invert(36%) sepia(93%) saturate(1475%) hue-rotate(209deg) brightness(96%) contrast(92%);
+  scale: 1.2;
+}
+
+.planner__group input[type="date"]:hover::-webkit-calendar-picker-indicator {
+  opacity: 1;
+}
+
 .planner__group input:focus,
 .planner__group select:focus,
 .planner__group textarea:focus {
@@ -114,6 +132,80 @@
 
 .planner__group textarea {
   resize: vertical;
+}
+
+/* Child Ages Dynamic Section */
+.planner__child-ages-container {
+  grid-column: 1 / -1;
+  background: #f8faff;
+  border: 1.5px dashed rgba(30, 93, 230, 0.28);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  animation: childFadeIn 0.3s ease;
+}
+
+.planner__child-ages-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.planner__child-ages-icon {
+  font-size: 18px;
+}
+
+.planner__child-ages-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+.planner__child-ages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 14px;
+}
+
+.planner__child-age-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.planner__child-age-field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.planner__child-age-field select {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--color-text);
+  background: var(--color-white);
+  border: 1.5px solid #d8dee8;
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.planner__child-age-field select:focus {
+  border-color: var(--color-blue);
+  box-shadow: 0 0 0 3px rgba(59, 91, 219, 0.15);
+}
+
+@keyframes childFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .planner__actions {
@@ -142,11 +234,12 @@
     margin-bottom: 36px;
   }
   .contact__planner-title {
-    font-size: 1.3rem;
+    font-size: 1.35rem;
     line-height: 1.25;
   }
   .contact__planner-sub {
-    font-size: 13px;
+    font-size: 14.5px;
+    line-height: 1.6;
   }
   .planner__group input,
   .planner__group select,
@@ -350,60 +443,6 @@
   border-top: 1px solid rgba(0,0,0,0.06);
 }
 
-/* Instagram */
-.contact__instagram {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  background: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%);
-  color: var(--color-white);
-  border-radius: var(--radius-lg);
-  padding: 28px 36px;
-  box-shadow: 0 8px 32px rgba(131, 58, 180, 0.25);
-}
-
-.contact__instagram-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.contact__instagram-text {
-  flex: 1;
-}
-
-.contact__instagram-handle {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 4px;
-}
-
-.contact__instagram-sub {
-  font-size: 14px;
-  opacity: 0.85;
-}
-
-.contact__instagram-btn {
-  background: rgba(255,255,255,0.2);
-  color: var(--color-white);
-  border: 1.5px solid rgba(255,255,255,0.5);
-  padding: 12px 24px;
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: var(--radius-full);
-  transition: all var(--transition-base);
-  white-space: nowrap;
-}
-
-.contact__instagram-btn:hover {
-  background: rgba(255,255,255,0.3);
-  transform: translateY(-2px);
-}
 
 /* ---- RESPONSIVE ---- */
 @media (max-width: 1024px) {
@@ -418,20 +457,6 @@
     text-align: center;
     padding: 24px;
     gap: 12px;
-  }
-
-  .contact__instagram {
-    flex-direction: column;
-    text-align: center;
-    padding: 28px 24px;
-    gap: 16px;
-  }
-
-  .contact__instagram-btn {
-    width: 100%;
-    justify-content: center;
-    display: flex;
-    align-items: center;
   }
 
   .contact__map-header {
@@ -524,8 +549,4 @@
     font-size: 13px;
   }
 
-  .contact__instagram {
-    padding: 22px 16px;
-    border-radius: var(--radius-md);
-  }
 }

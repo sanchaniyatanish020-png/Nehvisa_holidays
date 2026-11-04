@@ -25,11 +25,11 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
-  background: var(--color-white);
-  padding: 28px 32px;
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(0,0,0,0.06);
-  box-shadow: var(--shadow-sm);
+  background: linear-gradient(90deg, #0c143d 0%, #17328e 52%, #1e5de6 100%);
+  padding: 32px 36px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 14px 40px rgba(12, 20, 61, 0.25);
   margin-top: 36px;
   text-align: center;
 }
@@ -37,25 +37,25 @@
 .whyus__stat {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
 .whyus__stat-number {
   font-family: var(--font-heading);
-  font-size: 2rem;
+  font-size: 2.25rem;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--color-navy) 0%, var(--color-blue) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #FFD200;
   line-height: 1.1;
+  letter-spacing: -0.01em;
 }
 
 .whyus__stat-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--color-text-muted);
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+  opacity: 0.92;
 }
 
 .whyus__grid {
@@ -239,8 +239,8 @@
   }
 
   .whyus__slider-btn {
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     background: var(--color-white);
     border: 1.5px solid rgba(26, 31, 94, 0.12);
@@ -312,40 +312,43 @@
   }
 
   .whyus__stat-number {
-    font-size: 1.45rem;
+    font-size: 1.55rem;
   }
 
   .whyus__stat-label {
-    font-size: 11px;
-    letter-spacing: 0.02em;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    font-weight: 700;
   }
 }
 
 @media (max-width: 480px) {
   .whyus-card--slide {
-    padding: 18px 16px 16px;
-    min-height: 160px;
+    padding: 20px 18px 18px;
+    min-height: 165px;
   }
 
   .whyus-card--slide .whyus-card__title {
-    font-size: 1.02rem;
+    font-size: 1.08rem;
   }
 
   .whyus-card--slide .whyus-card__desc {
-    font-size: 0.85rem;
+    font-size: 0.92rem;
+    line-height: 1.6;
   }
 
   .whyus__stats {
-    padding: 14px 12px;
-    gap: 8px;
+    padding: 16px 14px;
+    gap: 10px;
     margin-bottom: 20px;
   }
 
   .whyus__stat-number {
-    font-size: 1.35rem;
+    font-size: 1.45rem;
   }
 
   .whyus__stat-label {
-    font-size: 10.5px;
+    font-size: 11.5px;
+    font-weight: 700;
   }
 }

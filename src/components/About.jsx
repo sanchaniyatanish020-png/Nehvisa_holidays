@@ -42,8 +42,8 @@ export default function About() {
                 </svg>
               </div>
               <div>
-                <h3 className="about__feature-title">Domestic &amp; International</h3>
-                <p className="about__feature-desc">India and destinations worldwide</p>
+                <h3 className="about__feature-title">International Tours</h3>
+                <p className="about__feature-desc">Curated worldwide destinations</p>
               </div>
             </div>
             <div className="about__feature">
@@ -103,16 +103,16 @@ export default function About() {
             <picture>
               <source
                 type="image/webp"
-                srcSet="/dubai-800.webp 800w, /dubai-1400.webp 1400w"
+                srcSet={`${import.meta.env.BASE_URL}dubai-800.webp 800w, ${import.meta.env.BASE_URL}dubai-1400.webp 1400w`}
                 sizes="(max-width: 960px) 100vw, 480px"
               />
               <source
                 type="image/jpeg"
-                srcSet="/dubai-800.jpg 800w, /dubai-1400.jpg 1400w"
+                srcSet={`${import.meta.env.BASE_URL}dubai-800.jpg 800w, ${import.meta.env.BASE_URL}dubai-1400.jpg 1400w`}
                 sizes="(max-width: 960px) 100vw, 480px"
               />
               <img
-                src="/dubai-800.jpg"
+                src={`${import.meta.env.BASE_URL}dubai-800.jpg`}
                 alt="Travel destinations offered by Nehvisa Holidays"
                 className="about__image"
                 width="800"
@@ -125,7 +125,7 @@ export default function About() {
               <div className="about__badge-icon" aria-hidden="true">✈️</div>
               <div>
                 <p className="about__badge-title">Plan Your Journey</p>
-                <p className="about__badge-sub">Domestic &amp; International</p>
+                <p className="about__badge-sub">Worldwide Destinations</p>
               </div>
             </div>
           </div>
