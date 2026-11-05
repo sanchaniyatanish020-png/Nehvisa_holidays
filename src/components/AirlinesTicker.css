@@ -1,0 +1,152 @@
+/* ---- AIRLINES TICKER CONTINUOUS MARQUEE ---- */
+.airlines-ticker {
+  background: #ffffff;
+  border-top: 1px solid #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
+  overflow: hidden;
+  position: relative;
+  z-index: 5;
+  box-shadow: 0 2px 10px rgba(10, 16, 50, 0.03);
+}
+
+.airlines-ticker__inner {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  max-width: 100%;
+}
+
+/* Left Label Badge */
+.airlines-ticker__badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #0a1032;
+  color: #ffffff;
+  height: 100%;
+  padding: 0 20px;
+  font-family: var(--font-heading);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  flex-shrink: 0;
+  z-index: 2;
+  box-shadow: 4px 0 12px rgba(10, 16, 50, 0.12);
+}
+
+.airlines-ticker__badge-icon {
+  color: #60a5fa;
+  transform: rotate(45deg);
+}
+
+/* Track Container */
+.airlines-ticker__track-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  mask-image: linear-gradient(90deg, transparent 0%, #000 3%, #000 97%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 3%, #000 97%, transparent 100%);
+}
+
+/* Continuous CSS Marquee (GPU Composited for 90+ Lighthouse Score) */
+@keyframes airlinesGlide {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.airlines-ticker__track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: airlinesGlide 32s linear infinite;
+  will-change: transform;
+}
+
+.airlines-ticker:hover .airlines-ticker__track,
+.airlines-ticker:focus-within .airlines-ticker__track {
+  animation-play-state: paused;
+}
+
+/* Each Airline Item */
+.airlines-ticker__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  white-space: nowrap;
+  cursor: default;
+  transition: color 0.15s ease;
+}
+
+.airlines-ticker__plane-icon {
+  color: #2563eb;
+  transform: rotate(45deg);
+  flex-shrink: 0;
+  opacity: 0.85;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.airlines-ticker__item:hover .airlines-ticker__plane-icon {
+  transform: rotate(45deg) scale(1.2);
+  opacity: 1;
+}
+
+.airlines-ticker__name {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #1e293b;
+  letter-spacing: -0.01em;
+  transition: color 0.15s ease;
+}
+
+.airlines-ticker__item:hover .airlines-ticker__name {
+  color: #2563eb;
+}
+
+.airlines-ticker__dot {
+  color: #cbd5e1;
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .airlines-ticker__track {
+    animation: none;
+    overflow-x: auto;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .airlines-ticker__inner {
+    height: 44px;
+  }
+
+  .airlines-ticker__badge {
+    padding: 0 12px;
+    font-size: 11px;
+    gap: 6px;
+  }
+
+  .airlines-ticker__name {
+    font-size: 12.5px;
+  }
+
+  .airlines-ticker__item {
+    padding: 0 12px;
+  }
+
+  .airlines-ticker__track {
+    animation-duration: 25s;
+  }
+}
