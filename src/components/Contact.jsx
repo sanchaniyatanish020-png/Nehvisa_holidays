@@ -39,8 +39,6 @@ function ContactCard({ icon, title, value, btnText, btnHref, btnId, target }) {
 
 export default function Contact() {
   const ref = useRef(null);
-  const mapWrapRef = useRef(null);
-  const [loadMap, setLoadMap] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -117,23 +115,6 @@ export default function Contact() {
       { threshold: 0.1 }
     );
     ref.current?.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-
-  // Defer Google Maps iframe until user scrolls near the map container
-  useEffect(() => {
-    const el = mapWrapRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setLoadMap(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: '350px' }
-    );
-    observer.observe(el);
     return () => observer.disconnect();
   }, []);
 
@@ -422,51 +403,6 @@ export default function Contact() {
               </button>
             </div>
           </form>
-        </div>
-
-
-        {/* Map */}
-        <div className="contact__map fade-up">
-          <div className="contact__map-header">
-            <h3 className="contact__map-title">Find Our Office</h3>
-            <a
-              href={businessInfo.mapsLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="contact__map-link"
-              id="contact-open-maps-btn"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
-                <polyline points="15 3 21 3 21 9"/>
-                <line x1="10" y1="14" x2="21" y2="3"/>
-              </svg>
-              Open in Google Maps
-            </a>
-          </div>
-          <div className="contact__map-wrap" ref={mapWrapRef} style={{ minHeight: '420px', background: '#e2e8f0' }}>
-            {loadMap ? (
-              <iframe
-                title="Nehvisa Holidays Office Location - 204 Infinity Business Hub Surat"
-                src={businessInfo.mapsEmbed}
-                width="100%"
-                height="420"
-                style={{ border: 0, display: 'block' }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
-            ) : null}
-          </div>
-          <div className="contact__address-bar">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-              <circle cx="12" cy="10" r="3"/>
-            </svg>
-            <address style={{ fontStyle: 'normal' }}>
-              {address.line1} {address.line2} {address.line3} {address.line4}
-            </address>
-          </div>
         </div>
       </div>
     </section>
