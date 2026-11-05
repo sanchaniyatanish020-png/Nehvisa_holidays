@@ -223,6 +223,62 @@
   text-decoration: underline;
 }
 
+/* Direct Google Review Invite Card */
+.testi-card--cta {
+  background: linear-gradient(145deg, #f8fafc 0%, #eef2ff 100%);
+  border: 1.5px dashed #c7d2fe;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 28px 24px;
+}
+
+.testi-card--cta:hover {
+  border-color: #6366f1;
+  border-style: solid;
+}
+
+.testi-card__cta-icon {
+  margin-bottom: 12px;
+}
+
+.testi-card--cta .testi-card__title {
+  font-size: 17px;
+  color: var(--color-navy);
+  margin-bottom: 8px;
+}
+
+.testi-card--cta .testi-card__text {
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 16px;
+  flex: none;
+}
+
+.testi-card__cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 22px;
+  background: #1a1f5e;
+  color: #ffffff;
+  font-size: 13.5px;
+  font-weight: 700;
+  border-radius: 9999px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(26, 31, 94, 0.2);
+  transition: all 0.2s ease;
+}
+
+.testi-card__cta-btn:hover {
+  background: #2563eb;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.3);
+}
+
 /* Card Footer */
 .testi-card__footer {
   display: flex;
