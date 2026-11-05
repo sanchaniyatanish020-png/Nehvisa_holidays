@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import './index.css';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import FloatingButtons from './components/FloatingButtons';
 
 // Code-split below-the-fold sections for instant FCP and LCP
 const PromoBanner = lazy(() => import('./components/PromoBanner'));
@@ -12,7 +13,6 @@ const WhyUs = lazy(() => import('./components/WhyUs'));
 const Testimonials = lazy(() => import('./components/Testimonials'));
 const Contact = lazy(() => import('./components/Contact'));
 const Footer = lazy(() => import('./components/Footer'));
-const FloatingButtons = lazy(() => import('./components/FloatingButtons'));
 
 export default function App() {
   return (
@@ -32,8 +32,8 @@ export default function App() {
       </main>
       <Suspense fallback={null}>
         <Footer />
-        <FloatingButtons />
       </Suspense>
+      <FloatingButtons />
     </>
   );
 }

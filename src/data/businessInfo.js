@@ -9,7 +9,7 @@ const businessInfo = {
   whatsapp: '+91 82005 18010',
   whatsappLink: 'https://wa.me/918200518010',
   whatsappDefaultMessage:
-    'Hello Nehvisa Holidays, I would like to enquire about a travel plan.',
+    'Hello Nehvisa Holidays! I am visiting your website and would like to plan a holiday trip. Please share package details and itinerary.',
   // TODO: Verify email address (nenadipholidays@gmail.com does not match brand name 'Nehvisa'). Update if official business email exists.
   email: 'nenadipholidays@gmail.com',
   emailLink: 'mailto:nenadipholidays@gmail.com',

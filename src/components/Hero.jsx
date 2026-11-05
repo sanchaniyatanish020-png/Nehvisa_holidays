@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import heroSlides from '../data/heroSlides';
+import businessInfo from '../data/businessInfo';
 import './Hero.css';
 
 export default function Hero() {
@@ -168,7 +169,7 @@ export default function Hero() {
         {/* CTA Buttons */}
         <div className="hero__ctas">
           <a
-            href="https://wa.me/919909943345?text=Hello%20Nehvisa%20Holidays%2C%20I%20would%20like%20to%20plan%20a%20holiday%20trip."
+            href={`${businessInfo.whatsappLink}?text=${encodeURIComponent(businessInfo.whatsappDefaultMessage)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-primary hero__btn hero__btn--primary"

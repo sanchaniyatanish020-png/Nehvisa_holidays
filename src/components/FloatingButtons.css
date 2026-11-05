@@ -1,40 +1,106 @@
-/* ---- STICKY WHATSAPP ICON (BOTTOM RIGHT) ---- */
+/* ---- FLOATING WHATSAPP BUTTON (ONE-TAP CONTACT) ---- */
 
 .sticky-whatsapp {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 9999;
+  bottom: 28px;
+  right: 28px;
+  z-index: 99999;
   display: block;
 }
 
+.sticky-whatsapp__wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Tooltip Prompt Bubble */
+.sticky-whatsapp__tooltip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  color: #0f172a;
+  padding: 10px 18px;
+  border-radius: 9999px;
+  box-shadow: 0 8px 24px rgba(10, 16, 50, 0.16);
+  border: 1px solid #e2e8f0;
+  text-decoration: none;
+  font-family: var(--font-heading);
+  font-size: 13.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(12px) scale(0.95);
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sticky-whatsapp__tooltip--visible {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  pointer-events: auto;
+}
+
+.sticky-whatsapp:hover .sticky-whatsapp__tooltip {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  pointer-events: auto;
+}
+
+/* Green Live Online Dot */
+.sticky-whatsapp__online-dot {
+  width: 9px;
+  height: 9px;
+  background: #22c55e;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.3);
+  animation: onlinePulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes onlinePulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.4);
+  }
+  50% {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.1);
+  }
+}
+
+/* Main Floating Button */
 .sticky-whatsapp__btn {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 60px;
-  height: 60px;
+  width: 62px;
+  height: 62px;
   border-radius: 50%;
   background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
-  color: var(--color-white);
-  box-shadow: 0 6px 24px rgba(37, 211, 102, 0.45);
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  color: #ffffff;
+  box-shadow: 0 8px 28px rgba(37, 211, 102, 0.45);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  flex-shrink: 0;
 }
 
 .sticky-whatsapp__btn:hover {
   transform: translateY(-4px) scale(1.08);
-  box-shadow: 0 10px 32px rgba(37, 211, 102, 0.6);
+  box-shadow: 0 12px 36px rgba(37, 211, 102, 0.65);
 }
 
 .sticky-whatsapp__btn:active {
   transform: scale(0.92);
 }
 
-/* Subtle continuous pulse animation */
+/* Continuous Soft Ambient Pulse */
 .sticky-whatsapp__btn::after {
   content: '';
   position: absolute;
@@ -52,31 +118,38 @@
     opacity: 0.7;
   }
   100% {
-    transform: scale(1.4);
+    transform: scale(1.45);
     opacity: 0;
   }
 }
 
+/* Responsive for Mobile Devices */
 @media (max-width: 640px) {
   .sticky-whatsapp {
     bottom: calc(20px + env(safe-area-inset-bottom, 0px));
     right: 20px;
   }
 
+  .sticky-whatsapp__tooltip {
+    display: none; /* Hide text bubble on small mobile to avoid obstructing content */
+  }
+
   .sticky-whatsapp__btn {
-    width: 56px;
-    height: 56px;
-    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+    width: 58px;
+    height: 58px;
+    box-shadow: 0 6px 24px rgba(37, 211, 102, 0.55);
   }
 
   .sticky-whatsapp__btn svg {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
   }
 }
 
+/* Accessibility Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-  .sticky-whatsapp__btn::after {
+  .sticky-whatsapp__btn::after,
+  .sticky-whatsapp__online-dot {
     animation: none !important;
   }
 }
