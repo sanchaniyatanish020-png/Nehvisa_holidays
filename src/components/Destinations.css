@@ -85,9 +85,10 @@
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x mandatory;
-  padding: 10px 4px 28px 4px;
+  padding: 16px 4px 32px 4px;
   scrollbar-width: none;
   box-sizing: border-box;
+  align-items: center;
 }
 
 .destinations__pills-track::-webkit-scrollbar {
@@ -105,17 +106,20 @@
   cursor: pointer;
   user-select: none;
   -webkit-user-select: none;
-  scroll-snap-align: start;
+  scroll-snap-align: center;
   box-shadow: 0 10px 24px rgba(14, 20, 56, 0.08);
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, opacity 0.35s ease;
   outline: none;
   box-sizing: border-box;
 }
 
-.dest-capsule:hover,
-.dest-capsule:focus-visible {
-  transform: translateY(-8px);
-  box-shadow: 0 18px 40px rgba(14, 20, 56, 0.22);
+/* Desktop Hover Elevation */
+@media (min-width: 769px) {
+  .dest-capsule:hover,
+  .dest-capsule:focus-visible {
+    transform: translateY(-8px) scale(1.04);
+    box-shadow: 0 18px 40px rgba(14, 20, 56, 0.22);
+  }
 }
 
 /* Top Destination Name in Capsule */
@@ -134,7 +138,7 @@
   font-size: 1.35rem;
   font-weight: 800;
   line-height: 1.15;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
   display: block;
 }
 
@@ -157,131 +161,64 @@
 }
 
 .dest-capsule:hover .dest-capsule__img,
-.dest-capsule:focus-visible .dest-capsule__img {
-  transform: scale(1.08);
+.dest-capsule--active .dest-capsule__img {
+  transform: scale(1.06);
 }
 
-/* Hover Overlay with "Enquire Now" Button */
-.dest-capsule__hover-overlay {
+/* Bottom Action Area with "Enquire Now" & Yellow Arrow Button */
+.dest-capsule__bottom-action {
   position: absolute;
-  inset: 0;
-  z-index: 4;
-  background: linear-gradient(180deg, transparent 35%, rgba(14, 20, 56, 0.8) 70%, rgba(14, 20, 56, 0.96) 100%);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  padding: 40px 14px 20px;
+  background: linear-gradient(180deg, transparent 0%, rgba(14, 20, 56, 0.65) 45%, rgba(14, 20, 56, 0.94) 100%);
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: flex-end;
-  align-items: center;
-  padding: 18px 14px 26px;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(10px);
-  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.dest-capsule:hover .dest-capsule__hover-overlay,
-.dest-capsule:focus-within .dest-capsule__hover-overlay {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
-}
-
-.dest-capsule__hover-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-.dest-capsule__duration-tag {
-  font-size: 11px;
-  font-weight: 600;
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.22);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  padding: 3px 10px;
-  border-radius: 9999px;
-  margin-bottom: 10px;
-  text-align: center;
-  letter-spacing: 0.02em;
-}
-
-/* Enquire Now Button with Yellow Circle Arrow */
-.dest-capsule__enquire-btn {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   gap: 8px;
-  width: 100%;
-  background: #ffffff;
-  color: #0e1438;
-  border-radius: 9999px;
-  padding: 6px 6px 6px 14px;
-  font-size: 12px;
-  font-weight: 700;
+  box-sizing: border-box;
+}
+
+.dest-capsule__enquire-label {
   font-family: var(--font-heading);
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  touch-action: manipulation;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+  letter-spacing: 0.03em;
+  text-align: center;
+  pointer-events: none;
 }
 
-.dest-capsule__enquire-btn:hover {
-  background: #ffcc00;
-  color: #0e1438;
-  transform: scale(1.03);
-}
-
-.dest-capsule__enquire-text {
-  letter-spacing: 0.02em;
-}
-
-.dest-capsule__arrow-circle {
-  width: 28px;
-  height: 28px;
+/* Yellow Circle Button with Arrow matching reference screenshot */
+.dest-capsule__yellow-btn {
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: #ffcc00;
+  background: #ffdb00;
   color: #0e1438;
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  transition: transform 0.2s ease;
-}
-
-.dest-capsule__enquire-btn:hover .dest-capsule__arrow-circle {
-  background: #0e1438;
-  color: #ffffff;
-  transform: rotate(45deg);
-}
-
-.dest-capsule__wa-mini-btn {
-  margin-top: 6px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  font-size: 11px;
-  font-weight: 600;
-  color: #25d366;
-  background: rgba(37, 211, 102, 0.15);
-  border: 1px solid rgba(37, 211, 102, 0.35);
-  border-radius: 9999px;
-  padding: 4px 10px;
-  width: 100%;
   cursor: pointer;
-  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.dest-capsule__wa-mini-btn:hover {
-  background: #25d366;
-  color: #ffffff;
-  border-color: #25d366;
+.dest-capsule__yellow-btn:hover,
+.dest-capsule:hover .dest-capsule__yellow-btn {
+  background: #ffe833;
+  transform: scale(1.1) rotate(45deg);
+  box-shadow: 0 6px 18px rgba(255, 219, 0, 0.6);
 }
 
-/* ---- RESPONSIVE MEDIA QUERIES ---- */
+/* ---- MOBILE COVERFLOW DISPLAY (AS IN USER SCREENSHOT) ---- */
 @media (max-width: 768px) {
   .destinations {
     padding-top: 40px;
@@ -289,14 +226,43 @@
   }
 
   .destinations__header-row {
-    margin-bottom: 20px;
+    margin-bottom: 24px;
+    padding: 0 4px;
   }
 
+  .destinations__header-row .section-title {
+    font-size: 1.6rem;
+  }
+
+  /* Centering padding so active card sits dead center on screen with side cards peeking */
+  .destinations__pills-track {
+    gap: 16px;
+    padding-left: calc(50vw - 85px);
+    padding-right: calc(50vw - 85px);
+    padding-top: 24px;
+    padding-bottom: 32px;
+    align-items: center;
+  }
+
+  /* Base Pill on Mobile */
   .dest-capsule {
-    flex: 0 0 160px;
-    width: 160px;
-    height: 320px;
-    border-radius: 80px;
+    flex: 0 0 170px;
+    width: 170px;
+    height: 330px;
+    border-radius: 85px;
+    transform: scale(0.86);
+    opacity: 0.72;
+    filter: brightness(0.96);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, box-shadow 0.35s ease;
+  }
+
+  /* Active Center Card on Mobile: Prominent, Scaled up, Fully Opaque! */
+  .dest-capsule--active {
+    transform: scale(1.08);
+    opacity: 1;
+    filter: brightness(1);
+    z-index: 5;
+    box-shadow: 0 18px 42px rgba(14, 20, 56, 0.28);
   }
 
   .dest-capsule__header {
@@ -304,39 +270,57 @@
   }
 
   .dest-capsule__name {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
   }
 
-  /* On mobile touch screens, ensure tap activates hover overlay smoothly */
-  .dest-capsule__hover-overlay {
-    padding: 14px 10px 22px;
+  .dest-capsule__bottom-action {
+    padding: 32px 10px 18px;
+    gap: 6px;
   }
 
-  .dest-capsule__enquire-btn {
-    padding: 5px 5px 5px 12px;
-    font-size: 11.5px;
+  .dest-capsule__enquire-label {
+    font-size: 12px;
   }
 
-  .dest-capsule__arrow-circle {
-    width: 24px;
-    height: 24px;
+  .dest-capsule__yellow-btn {
+    width: 38px;
+    height: 38px;
+  }
+
+  .dest-capsule--active .dest-capsule__yellow-btn {
+    box-shadow: 0 4px 16px rgba(255, 219, 0, 0.55);
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 420px) {
+  .destinations__pills-track {
+    gap: 14px;
+    padding-left: calc(50vw - 78px);
+    padding-right: calc(50vw - 78px);
+  }
+
   .dest-capsule {
-    flex: 0 0 150px;
-    width: 150px;
-    height: 300px;
-    border-radius: 75px;
+    flex: 0 0 156px;
+    width: 156px;
+    height: 305px;
+    border-radius: 78px;
+    transform: scale(0.85);
+  }
+
+  .dest-capsule--active {
+    transform: scale(1.08);
   }
 
   .dest-capsule__name {
     font-size: 1.15rem;
   }
 
-  .destinations__pills-track {
-    gap: 14px;
-    padding-bottom: 20px;
+  .dest-capsule__enquire-label {
+    font-size: 11.5px;
+  }
+
+  .dest-capsule__yellow-btn {
+    width: 36px;
+    height: 36px;
   }
 }
