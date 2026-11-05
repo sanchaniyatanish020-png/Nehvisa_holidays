@@ -1,310 +1,265 @@
-/* ---- CONTACT BANNER & CALLBACK INQUIRY FORM ---- */
-.contact-banner {
+/* ---- CONTACT SECTION WITH SCENIC BACKGROUND IMAGE ---- */
+.contact-with-bg {
   position: relative;
   overflow: hidden;
-  min-height: 540px;
-  display: flex;
-  align-items: center;
-  padding: 80px 0;
-  background: #070c22;
+  min-height: 600px;
+  padding: 85px 0 95px;
+  background-color: #070c22;
+  background-image: linear-gradient(
+      180deg,
+      rgba(7, 12, 34, 0.8) 0%,
+      rgba(7, 12, 34, 0.65) 45%,
+      rgba(7, 12, 34, 0.88) 100%
+    ),
+    url('/inquiry-bg.jpg');
+  background-size: cover;
+  background-position: center;
 }
 
-/* Background Image & Scenery Overlay */
-.contact-banner__bg-wrap {
+/* Background Image Layer */
+.contact-with-bg__img-wrap {
   position: absolute;
   inset: 0;
   z-index: 1;
+  pointer-events: none;
 }
 
-.contact-banner__bg-img {
+.contact-with-bg__img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
 }
 
-.contact-banner__overlay {
+.contact-with-bg__overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    90deg,
-    rgba(6, 12, 34, 0.85) 0%,
-    rgba(6, 12, 34, 0.6) 45%,
-    rgba(6, 12, 34, 0.25) 100%
+    180deg,
+    rgba(6, 12, 34, 0.82) 0%,
+    rgba(6, 12, 34, 0.65) 40%,
+    rgba(6, 12, 34, 0.9) 100%
   );
 }
 
-/* Container Split: Text on Left, Card on Right */
-.contact-banner__container {
+/* Container */
+.contact-with-bg__container {
   position: relative;
   z-index: 2;
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 48px;
-  align-items: center;
+  max-width: 980px;
+  margin: 0 auto;
 }
 
-/* Left Side: Dramatic Serif Typography */
-.contact-banner__text-col {
-  padding-right: 20px;
+/* Section Header over Background */
+.contact-with-bg__header {
+  text-align: center;
+  margin-bottom: 36px;
 }
 
-.contact-banner__title {
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: clamp(2.3rem, 4.5vw, 3.6rem);
-  font-weight: 500;
+.contact-with-bg__badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #4ade80;
+  background: rgba(34, 197, 94, 0.18);
+  border: 1px solid rgba(34, 197, 94, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 6px 18px;
+  border-radius: 9999px;
+  margin-bottom: 14px;
+}
+
+.contact-with-bg__title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 3.8vw, 2.6rem);
+  font-weight: 800;
   color: #ffffff;
-  line-height: 1.15;
-  margin-bottom: 22px;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+  margin-bottom: 10px;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.65);
   letter-spacing: -0.01em;
 }
 
-.contact-banner__subtitle {
-  font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+.contact-with-bg__subtitle {
+  font-size: 15.5px;
   color: rgba(255, 255, 255, 0.92);
-  line-height: 1.55;
-  max-width: 440px;
+  line-height: 1.6;
+  max-width: 620px;
+  margin: 0 auto;
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
   font-weight: 400;
 }
 
-/* Right Side: Floating Clean Form Card */
-.contact-banner__card-col {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.contact-card-box {
-  background: #ffffff;
+/* Planner Card Box with Luxury Glassmorphic Look */
+.contact__planner-box {
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border-radius: 24px;
-  padding: 36px 32px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
-  max-width: 440px;
-  width: 100%;
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  padding: 44px 48px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
   box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
 }
 
-.contact-card-box__form {
+/* Top Accent Line */
+.contact__planner-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #5496f9, #ed0e79, #efa31a, #2e236d);
+}
+
+.contact__planner-form {
   display: flex;
   flex-direction: column;
 }
 
-.contact-card-box__field {
-  margin-bottom: 14px;
+/* Grid Layout for Fields */
+.planner__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+  margin-bottom: 30px;
 }
 
-/* Base Input Styles */
-.contact-card-box__input {
+.planner__group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.planner__group--full {
+  grid-column: 1 / -1;
+}
+
+.planner__group label {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #0e1438;
+  letter-spacing: 0.02em;
+}
+
+/* Inputs, Selects & Textarea */
+.planner__group input,
+.planner__group select,
+.planner__group textarea {
   width: 100%;
-  height: 50px;
-  border-radius: 10px;
-  border: 1.5px solid #e2e8f0;
-  font-size: 14.5px;
+  height: 48px;
+  padding: 0 16px;
+  font-size: 15px;
+  font-family: inherit;
   color: #0f172a;
   background: #ffffff;
-  padding: 0 16px;
-  box-sizing: border-box;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  border: 1.5px solid #d8dee8;
+  border-radius: 10px;
   outline: none;
-  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
 }
 
-.contact-card-box__input::placeholder {
+.planner__group textarea {
+  height: auto;
+  padding: 12px 16px;
+  resize: vertical;
+  min-height: 70px;
+}
+
+.planner__group input::placeholder,
+.planner__group textarea::placeholder {
   color: #94a3b8;
   font-weight: 400;
 }
 
-.contact-card-box__input:focus {
+.planner__group input:focus,
+.planner__group select:focus,
+.planner__group textarea:focus {
   border-color: #0a4db3;
   box-shadow: 0 0 0 3px rgba(10, 77, 179, 0.12);
 }
 
-/* Phone Group with +91 Country Pill */
-.contact-card-box__phone-group {
-  display: flex;
-  align-items: center;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 10px;
-  background: #ffffff;
-  overflow: hidden;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.contact-card-box__phone-group:focus-within {
-  border-color: #0a4db3;
-  box-shadow: 0 0 0 3px rgba(10, 77, 179, 0.12);
-}
-
-.contact-card-box__country-pill {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 0 12px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #1e293b;
-  height: 50px;
-  border-right: 1.5px solid #e2e8f0;
-  background: #f8fafc;
-  user-select: none;
-  flex-shrink: 0;
-}
-
-.contact-card-box__country-pill svg {
-  color: #64748b;
-}
-
-.contact-card-box__input--phone {
-  border: none !important;
-  box-shadow: none !important;
-  border-radius: 0;
-  padding: 0 14px;
-  flex: 1;
-}
-
-/* Input with Prefix Icon (Mail) */
-.contact-card-box__icon-group {
-  position: relative;
-  width: 100%;
-}
-
-.contact-card-box__prefix-icon {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #64748b;
-  display: flex;
-  align-items: center;
-  pointer-events: none;
-}
-
-.contact-card-box__input--icon {
-  padding-left: 44px;
-}
-
-/* Select Destination Dropdown */
-.contact-card-box__select-wrap {
-  position: relative;
-  width: 100%;
-}
-
-.contact-card-box__select {
-  width: 100%;
-  height: 50px;
-  border-radius: 10px;
-  border: 1.5px solid #e2e8f0;
-  font-size: 14.5px;
-  color: #0f172a;
-  background: #ffffff;
-  padding: 0 38px 0 16px;
-  box-sizing: border-box;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  outline: none;
-  cursor: pointer;
-  appearance: none;
-  -webkit-appearance: none;
-  font-family: inherit;
-}
-
-.contact-card-box__select:focus {
-  border-color: #0a4db3;
-  box-shadow: 0 0 0 3px rgba(10, 77, 179, 0.12);
-}
-
-.contact-card-box__select-arrow {
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #64748b;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-}
-
-/* Error states */
-.contact-card-box__field--error {
-  border-color: #ef4444 !important;
-}
-
-.contact-card-box__err-text {
-  display: block;
-  font-size: 11.5px;
-  color: #ef4444;
+.planner__error-msg {
+  font-size: 12px;
+  color: #dc2626;
   font-weight: 500;
+  margin: 2px 0 0;
+}
+
+/* Dynamic Child Ages UI */
+.planner__child-ages-container {
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 16px 20px;
   margin-top: 4px;
 }
 
-/* Consent Checkbox */
-.contact-card-box__consent {
-  margin: 6px 0 20px;
-}
-
-.contact-card-box__checkbox-label {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  cursor: pointer;
-  user-select: none;
-}
-
-.contact-card-box__checkbox {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.contact-card-box__checkbox-custom {
-  width: 18px;
-  height: 18px;
-  border-radius: 4px;
-  border: 1.5px solid #cbd5e1;
-  background: #ffffff;
+.planner__child-ages-header {
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: transparent;
-  flex-shrink: 0;
-  margin-top: 1px;
-  transition: all 0.2s ease;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
-.contact-card-box__checkbox:checked + .contact-card-box__checkbox-custom {
-  background: #0a4db3;
-  border-color: #0a4db3;
-  color: #ffffff;
+.planner__child-ages-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0e1438;
 }
 
-.contact-card-box__consent-text {
-  font-size: 11.5px;
-  line-height: 1.45;
+.planner__child-ages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.planner__child-age-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.planner__child-age-field label {
+  font-size: 12px;
+  font-weight: 600;
   color: #475569;
 }
 
-.contact-card-box__link {
-  color: #0a4db3;
-  text-decoration: underline;
-  font-weight: 600;
+.planner__child-age-field select {
+  height: 42px;
+  font-size: 14px;
 }
 
-/* Submit Button: Request a Callback */
-.contact-card-box__submit-btn {
-  width: 100%;
-  height: 52px;
-  border-radius: 9999px;
-  background: #0a4db3;
-  color: #ffffff;
-  border: none;
-  font-size: 15.5px;
-  font-weight: 700;
-  font-family: var(--font-heading);
+/* Action Buttons */
+.planner__actions {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.planner__btn-wa {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  height: 52px;
+  padding: 0 32px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: var(--font-heading);
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #0e1438 0%, #0a4db3 100%);
+  color: #ffffff;
+  border: none;
   cursor: pointer;
   transition: all 0.25s ease;
   box-shadow: 0 6px 20px rgba(10, 77, 179, 0.35);
@@ -312,129 +267,90 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.contact-card-box__submit-btn:hover {
-  background: #083b8a;
+.planner__btn-wa:hover {
+  background: linear-gradient(135deg, #0a4db3 0%, #1e40af 100%);
   transform: translateY(-2px);
-  box-shadow: 0 10px 26px rgba(10, 77, 179, 0.45);
+  box-shadow: 0 10px 28px rgba(10, 77, 179, 0.45);
 }
 
-.contact-card-box__submit-btn:active {
+.planner__btn-wa:active {
   transform: scale(0.98);
 }
 
-/* Success Confirmation State */
-.contact-card-box__success {
-  text-align: center;
-  padding: 24px 8px;
-}
-
-.contact-card-box__success-icon {
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  background: #dcfce7;
-  color: #16a34a;
-  font-size: 26px;
-  font-weight: 700;
-  display: flex;
+.planner__btn-email {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 16px;
-}
-
-.contact-card-box__success-title {
-  font-family: var(--font-heading);
-  font-size: 1.5rem;
+  gap: 9px;
+  height: 52px;
+  padding: 0 28px;
+  font-size: 15px;
   font-weight: 700;
-  color: #0f172a;
-  margin-bottom: 8px;
-}
-
-.contact-card-box__success-msg {
-  font-size: 14px;
-  color: #475569;
-  line-height: 1.55;
-  margin-bottom: 20px;
-}
-
-.contact-card-box__reset-btn {
-  background: transparent;
-  border: 1px solid #cbd5e1;
-  color: #0a4db3;
-  padding: 8px 18px;
+  font-family: var(--font-heading);
   border-radius: 9999px;
-  font-size: 13px;
-  font-weight: 600;
+  background: #ffffff;
+  color: #0e1438;
+  border: 1.5px solid #0e1438;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.contact-card-box__reset-btn:hover {
-  background: #f1f5f9;
+.planner__btn-email:hover {
+  background: #0e1438;
+  color: #ffffff;
+  transform: translateY(-2px);
 }
 
-/* ---- RESPONSIVE ---- */
-@media (max-width: 960px) {
-  .contact-banner {
-    padding: 60px 0;
-  }
-
-  .contact-banner__container {
-    grid-template-columns: 1fr;
-    gap: 36px;
-  }
-
-  .contact-banner__text-col {
-    text-align: center;
-    padding-right: 0;
-  }
-
-  .contact-banner__subtitle {
-    margin: 0 auto;
-  }
-
-  .contact-banner__card-col {
-    justify-content: center;
-  }
-
-  .contact-card-box {
-    max-width: 480px;
-  }
+.planner__btn-email:active {
+  transform: scale(0.98);
 }
 
-@media (max-width: 640px) {
-  .contact-banner {
-    padding: 48px 0;
+/* ---- RESPONSIVE MEDIA QUERIES ---- */
+@media (max-width: 768px) {
+  .contact-with-bg {
+    padding: 56px 0 64px;
+    background-image: linear-gradient(
+        180deg,
+        rgba(7, 12, 34, 0.88) 0%,
+        rgba(7, 12, 34, 0.78) 50%,
+        rgba(7, 12, 34, 0.92) 100%
+      ),
+      url('/inquiry-bg.jpg');
   }
 
-  .contact-banner__overlay {
-    background: linear-gradient(
-      180deg,
-      rgba(6, 12, 34, 0.88) 0%,
-      rgba(6, 12, 34, 0.75) 50%,
-      rgba(6, 12, 34, 0.88) 100%
-    );
+  .contact-with-bg__title {
+    font-size: 1.9rem;
   }
 
-  .contact-banner__title {
-    font-size: 2.1rem;
-    margin-bottom: 14px;
-  }
-
-  .contact-card-box {
-    padding: 26px 20px;
+  .contact__planner-box {
+    padding: 28px 20px;
     border-radius: 20px;
   }
 
-  .contact-card-box__input,
-  .contact-card-box__select,
-  .contact-card-box__country-pill {
-    height: 48px;
-    font-size: 14px;
+  .planner__grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
   }
 
-  .contact-card-box__submit-btn {
+  .planner__group input,
+  .planner__group select {
+    height: 46px;
+    font-size: 14.5px;
+  }
+
+  .planner__actions {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .planner__btn-wa,
+  .planner__btn-email {
+    width: 100%;
     height: 48px;
-    font-size: 15px;
+    font-size: 14.5px;
   }
 }
