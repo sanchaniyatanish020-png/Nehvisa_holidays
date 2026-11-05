@@ -62,8 +62,8 @@
       rel="preload"
       as="image"
       type="image/webp"
-      href="/dubai-800.webp"
-      imagesrcset="/dubai-800.webp 800w, /dubai-1400.webp 1400w"
+      href="%BASE_URL%dubai-800.webp"
+      imagesrcset="%BASE_URL%dubai-800.webp 800w, %BASE_URL%dubai-1400.webp 1400w"
       imagesizes="(max-width: 768px) 100vw, 100vw"
       fetchpriority="high"
     />
@@ -133,7 +133,16 @@
     </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Instant Hero Background for 0ms LCP Discovery before JS hydration -->
+      <div style="position:fixed;inset:0;width:100%;height:100svh;z-index:-1;overflow:hidden;background:#070a22;">
+        <picture>
+          <source type="image/webp" srcset="%BASE_URL%dubai-800.webp 800w, %BASE_URL%dubai-1400.webp 1400w" sizes="(max-width: 768px) 100vw, 100vw" />
+          <img src="%BASE_URL%dubai-800.webp" alt="Nehvisa Holidays Dubai" width="1400" height="782" fetchpriority="high" decoding="async" style="width:100%;height:100%;object-fit:cover;" />
+        </picture>
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,10,34,0.7) 0%,rgba(7,10,34,0.4) 40%,rgba(7,10,34,0.85) 100%);"></div>
+      </div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

@@ -112,7 +112,7 @@ export default function About() {
                 sizes="(max-width: 960px) 100vw, 480px"
               />
               <img
-                src={`${import.meta.env.BASE_URL}dubai-800.jpg`}
+                src={`${import.meta.env.BASE_URL}dubai-800.webp`}
                 alt="Travel destinations offered by Nehvisa Holidays"
                 className="about__image"
                 width="800"

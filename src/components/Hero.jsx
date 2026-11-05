@@ -9,11 +9,11 @@ export default function Hero() {
   const [allowAdjacentLoad, setAllowAdjacentLoad] = useState(false);
   const timerRef = useRef(null);
 
-  // Defer loading adjacent slide images so initial hero paint has 100% bandwidth
+  // Defer loading adjacent slide images until after critical load is complete
   useEffect(() => {
     const timer = setTimeout(() => {
       setAllowAdjacentLoad(true);
-    }, 2500);
+    }, 6000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -129,7 +129,7 @@ export default function Hero() {
                   sizes="(max-width: 768px) 100vw, 100vw"
                 />
                 <img
-                  src={`${import.meta.env.BASE_URL}${s.baseImage}-800.jpg`}
+                  src={`${import.meta.env.BASE_URL}${s.baseImage}-800.webp`}
                   alt={`Travel destination: ${s.destination}`}
                   className="hero__bg"
                   width="1400"

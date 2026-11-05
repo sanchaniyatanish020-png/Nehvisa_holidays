@@ -85,7 +85,7 @@ export default function Footer() {
 
         {/* Quick Links */}
         <div className="footer__col">
-          <h3 className="footer__col-title">Quick Links</h3>
+          <h2 className="footer__col-title">Quick Links</h2>
           <ul role="list">
             {navLinks.map((link) => (
               <li key={link.href}>
@@ -103,7 +103,7 @@ export default function Footer() {
 
         {/* Contact Info */}
         <div className="footer__col">
-          <h3 className="footer__col-title">Contact</h3>
+          <h2 className="footer__col-title">Contact</h2>
           <ul className="footer__contact-list" role="list">
             <li>
               <a href={businessInfo.phoneLink} className="footer__contact-link" id="footer-phone-link">
@@ -138,7 +138,7 @@ export default function Footer() {
 
         {/* Vacation Planning CTA */}
         <div className="footer__col footer__cta-col">
-          <h3 className="footer__col-title">Start Your Journey</h3>
+          <h2 className="footer__col-title">Start Your Journey</h2>
           <p className="footer__cta-text">
             Ready to plan your next vacation? Get in touch with our expert travel planners.
           </p>

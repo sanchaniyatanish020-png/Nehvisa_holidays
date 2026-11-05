@@ -57,11 +57,11 @@
 
 /* Columns */
 .footer__col-title {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.45);
+  color: rgba(255, 255, 255, 0.88);
   margin-bottom: 20px;
 }
 
@@ -73,7 +73,7 @@
 
 .footer__link {
   font-size: 14.5px;
-  color: rgba(255,255,255,0.65);
+  color: rgba(255, 255, 255, 0.82);
   transition: color var(--transition-fast), padding-left var(--transition-fast);
 }
 
@@ -94,7 +94,7 @@
   align-items: flex-start;
   gap: 10px;
   font-size: 13.5px;
-  color: rgba(255,255,255,0.65);
+  color: rgba(255, 255, 255, 0.82);
   line-height: 1.6;
   transition: color var(--transition-fast);
 }
@@ -102,7 +102,7 @@
 .footer__contact-link svg {
   flex-shrink: 0;
   margin-top: 2px;
-  opacity: 0.65;
+  opacity: 0.85;
 }
 
 .footer__contact-link:hover {
@@ -116,8 +116,8 @@
 }
 
 .footer__cta-text {
-  font-size: 13.5px;
-  color: rgba(255,255,255,0.6);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.78);
   line-height: 1.7;
   margin-bottom: 20px;
 }
@@ -128,7 +128,7 @@
 
 /* Bottom Bar */
 .footer__bottom {
-  border-top: 1px solid rgba(255,255,255,0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .footer__bottom-inner {
@@ -143,12 +143,12 @@
 
 .footer__copyright {
   font-size: 13px;
-  color: rgba(255,255,255,0.4);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .footer__bottom-right {
   font-size: 13px;
-  color: rgba(255,255,255,0.35);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 /* ---- RESPONSIVE ---- */

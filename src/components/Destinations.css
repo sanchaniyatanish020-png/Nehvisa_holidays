@@ -358,10 +358,32 @@
   pointer-events: none;
 }
 
+@keyframes marqueeGlide {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
 .destinations__marquee-track {
   display: flex;
   width: max-content;
+  animation: marqueeGlide 42s linear infinite;
   will-change: transform;
+}
+
+.destinations__marquee-wrapper:hover .destinations__marquee-track,
+.destinations__marquee-wrapper:focus-within .destinations__marquee-track,
+.destinations__marquee-track--paused {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .destinations__marquee-track {
+    animation: none;
+  }
 }
 
 .destinations__marquee-slide {
