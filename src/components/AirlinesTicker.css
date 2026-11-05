@@ -73,10 +73,7 @@
   will-change: transform;
 }
 
-.airlines-ticker:hover .airlines-ticker__track,
-.airlines-ticker:focus-within .airlines-ticker__track {
-  animation-play-state: paused;
-}
+/* Continuously moves non-stop even on mouse enter / hover */
 
 /* Each Airline Item */
 .airlines-ticker__item {
