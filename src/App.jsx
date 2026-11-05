@@ -12,6 +12,7 @@ const Destinations = lazy(() => import('./components/Destinations'));
 const WhyUs = lazy(() => import('./components/WhyUs'));
 const Testimonials = lazy(() => import('./components/Testimonials'));
 const Contact = lazy(() => import('./components/Contact'));
+const TravelThemes = lazy(() => import('./components/TravelThemes'));
 const Footer = lazy(() => import('./components/Footer'));
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
           <WhyUs />
           <Testimonials />
           <Contact />
+          <TravelThemes />
         </Suspense>
       </main>
       <Suspense fallback={null}>
