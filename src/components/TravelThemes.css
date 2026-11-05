@@ -25,9 +25,10 @@
   margin: 0;
 }
 
-/* Accordion Row */
+/* ---- DESKTOP ACCORDION ROW ---- */
 .themes-accordion {
   display: flex;
+  flex-direction: row;
   gap: 16px;
   height: 440px;
   width: 100%;
@@ -45,17 +46,19 @@
   min-width: 60px;
   height: 100%;
   transition: flex 0.55s cubic-bezier(0.25, 1, 0.5, 1),
+    height 0.45s cubic-bezier(0.25, 1, 0.5, 1),
     box-shadow 0.4s ease,
     transform 0.4s ease;
   background-color: #0f172a;
   outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .theme-card:focus-visible {
   box-shadow: 0 0 0 3px #ffd000;
 }
 
-/* Active / Enlarged Card on Hover */
+/* Active / Enlarged Card */
 .theme-card--active {
   flex: 3.2;
   box-shadow: 0 20px 40px rgba(15, 23, 42, 0.28);
@@ -83,7 +86,7 @@
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(15, 23, 42, 0.15) 0%,
+    rgba(15, 23, 42, 0.2) 0%,
     rgba(15, 23, 42, 0.35) 55%,
     rgba(15, 23, 42, 0.8) 100%
   );
@@ -95,14 +98,14 @@
 .theme-card--active .theme-card__overlay {
   background: linear-gradient(
     180deg,
-    rgba(15, 23, 42, 0.35) 0%,
+    rgba(15, 23, 42, 0.38) 0%,
     rgba(15, 23, 42, 0.08) 28%,
     rgba(15, 23, 42, 0.4) 65%,
     rgba(15, 23, 42, 0.9) 100%
   );
 }
 
-/* ---- COLLAPSED STATE: VERTICAL TITLE ---- */
+/* ---- COLLAPSED STATE TITLE (Vertical on Desktop) ---- */
 .theme-card__vertical-wrap {
   position: absolute;
   bottom: 24px;
@@ -127,6 +130,7 @@
 
 .theme-card--active .theme-card__vertical-wrap {
   opacity: 0;
+  visibility: hidden;
   transform: translateY(8px);
   pointer-events: none;
 }
@@ -203,7 +207,7 @@
   transform: scale(0.95);
 }
 
-/* Bottom Text */
+/* Bottom Text Area */
 .theme-card__info {
   display: flex;
   flex-direction: column;
@@ -230,8 +234,8 @@
   font-weight: 400;
 }
 
-/* ---- RESPONSIVE MEDIA QUERIES ---- */
-@media (max-width: 992px) {
+/* ---- TABLET LANDSCAPE MEDIA QUERY ---- */
+@media (min-width: 769px) and (max-width: 992px) {
   .themes-section {
     padding: 56px 0 64px;
   }
@@ -254,9 +258,14 @@
   }
 }
 
-@media (max-width: 640px) {
+/* ---- MOBILE VERTICAL ACCORDION (MATCHING SCREENSHOTS) ---- */
+@media (max-width: 768px) {
   .themes-section {
-    padding: 44px 0 52px;
+    padding: 42px 0 52px;
+  }
+
+  .themes-section__container {
+    padding: 0 18px;
   }
 
   .themes-section__title {
@@ -264,47 +273,89 @@
     margin-bottom: 20px;
   }
 
+  /* Vertical Stack Container on Mobile */
   .themes-accordion {
-    height: 340px;
-    gap: 8px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 6px;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    gap: 12px;
+    overflow: visible;
   }
 
+  /* Collapsed Card Pill on Mobile */
   .theme-card {
-    min-width: 54px;
-    border-radius: 16px;
+    width: 100%;
+    flex: none;
+    height: 76px;
+    min-height: 76px;
+    border-radius: 18px;
+    transition: height 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+      box-shadow 0.35s ease,
+      border-radius 0.3s ease;
   }
 
+  /* When Active/Enlarged on Click on Mobile */
   .theme-card--active {
-    min-width: 230px;
-    flex: 3.5;
+    flex: none;
+    height: 380px;
+    min-height: 380px;
+    border-radius: 20px;
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.3);
   }
 
+  /* Horizontal Title for Collapsed Cards on Mobile */
   .theme-card__vertical-wrap {
-    left: 14px;
-    bottom: 18px;
+    position: absolute;
+    inset: 0;
+    bottom: auto;
+    left: auto;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    z-index: 2;
+    transform: none;
   }
 
   .theme-card__vertical-title {
-    font-size: 16px;
+    writing-mode: horizontal-tb;
+    transform: none;
+    font-size: 20px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.75);
   }
 
+  /* Darker gradient on collapsed mobile cards for crisp title contrast */
+  .theme-card:not(.theme-card--active) .theme-card__overlay {
+    background: linear-gradient(
+      90deg,
+      rgba(15, 23, 42, 0.65) 0%,
+      rgba(15, 23, 42, 0.35) 45%,
+      rgba(15, 23, 42, 0.2) 100%
+    );
+  }
+
+  /* Expanded Card Layout on Mobile */
   .theme-card__expanded-content {
-    padding: 14px;
+    padding: 16px;
+  }
+
+  .theme-card__tags {
+    gap: 6px;
+    max-width: calc(100% - 48px);
   }
 
   .theme-card__tag {
     font-size: 10.5px;
-    padding: 3px 8px;
+    padding: 4px 10px;
   }
 
   .theme-card__arrow-btn {
-    top: 12px;
-    right: 12px;
-    width: 32px;
-    height: 32px;
+    top: 14px;
+    right: 14px;
+    width: 34px;
+    height: 34px;
   }
 
   .theme-card__arrow-btn svg {
@@ -313,10 +364,11 @@
   }
 
   .theme-card__title {
-    font-size: 18px;
+    font-size: 20px;
   }
 
   .theme-card__subtitle {
-    font-size: 12px;
+    font-size: 13px;
+    max-width: 290px;
   }
 }

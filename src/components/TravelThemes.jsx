@@ -6,6 +6,17 @@ export default function TravelThemes() {
   // Default to Honeymoon (index 1) or Cruise (index 0)
   const [activeIndex, setActiveIndex] = useState(1);
 
+  const handleCardClick = (index) => {
+    setActiveIndex(index);
+  };
+
+  const handleMouseEnter = (index) => {
+    // Only expand on hover on devices with fine pointer (mouse/trackpad)
+    if (typeof window !== 'undefined' && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      setActiveIndex(index);
+    }
+  };
+
   const handleInquireTheme = (theme, e) => {
     e.stopPropagation();
     const contactSection = document.getElementById('contact');
@@ -36,8 +47,8 @@ export default function TravelThemes() {
               <div
                 key={theme.id}
                 className={`theme-card ${isActive ? 'theme-card--active' : ''}`}
-                onMouseEnter={() => setActiveIndex(index)}
-                onClick={() => setActiveIndex(index)}
+                onMouseEnter={() => handleMouseEnter(index)}
+                onClick={() => handleCardClick(index)}
                 role="button"
                 tabIndex={0}
                 aria-expanded={isActive}
@@ -45,7 +56,7 @@ export default function TravelThemes() {
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    setActiveIndex(index);
+                    handleCardClick(index);
                   }
                 }}
               >
@@ -58,7 +69,7 @@ export default function TravelThemes() {
                 />
                 <div className="theme-card__overlay" />
 
-                {/* Collapsed Vertical Title (hidden when active) */}
+                {/* Collapsed State Title (Vertical on Desktop, Horizontal Pill on Mobile) */}
                 <div className="theme-card__vertical-wrap" aria-hidden={isActive}>
                   <span className="theme-card__vertical-title">{theme.title}</span>
                 </div>
@@ -111,3 +122,4 @@ export default function TravelThemes() {
     </section>
   );
 }
+

@@ -47,3 +47,4 @@ const travelThemes = [
 ];
 
 export default travelThemes;
+
