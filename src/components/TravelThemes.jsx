@@ -19,16 +19,15 @@ export default function TravelThemes() {
 
   const handleInquireTheme = (theme, e) => {
     e.stopPropagation();
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-    // Also dispatch event to customize itinerary form
-    window.dispatchEvent(
-      new CustomEvent('select-destination', {
-        detail: { destinationName: theme.destinationNote || theme.title },
-      })
-    );
+    const slugMap = {
+      cruise: 'cruise',
+      honeymoon: 'bali',
+      luxury: 'dubai',
+      adventure: 'thailand',
+      wildlife: 'africa',
+    };
+    const targetSlug = slugMap[theme.id] || 'dubai';
+    window.location.hash = `#packages-${targetSlug}`;
   };
 
   return (

@@ -3,18 +3,14 @@ import './PromoBanner.css';
 
 export default function PromoBanner() {
   const handleDealClick = (destName) => {
-    window.dispatchEvent(
-      new CustomEvent('select-destination', {
-        detail: { destinationName: destName },
-      })
-    );
-    const destEl = document.getElementById('destinations');
-    if (destEl) {
-      destEl.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      const message = `Hello Nehvisa Holidays, I am interested in planning a holiday trip to ${destName}. Please share itinerary details.`;
-      window.open(`${businessInfo.whatsappLink}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
-    }
+    const raw = (destName || '').toLowerCase();
+    let slug = 'dubai';
+    if (raw.includes('dubai')) slug = 'dubai';
+    else if (raw.includes('bali')) slug = 'bali';
+    else if (raw.includes('vietnam')) slug = 'vietnam';
+    else if (raw.includes('thailand')) slug = 'thailand';
+    else if (raw.includes('singapore')) slug = 'singapore';
+    window.location.hash = `#packages-${slug}`;
   };
 
   return (

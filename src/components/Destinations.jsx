@@ -195,13 +195,23 @@ export default function Destinations() {
     };
   }, [handleScroll]);
 
+  const getSlug = (dest) => {
+    const raw = (dest.baseImage || dest.name || '').toLowerCase();
+    if (raw.includes('dubai')) return 'dubai';
+    if (raw.includes('thailand')) return 'thailand';
+    if (raw.includes('bali')) return 'bali';
+    if (raw.includes('vietnam')) return 'vietnam';
+    if (raw.includes('singapore')) return 'singapore';
+    if (raw.includes('malaysia')) return 'malaysia';
+    if (raw.includes('europe') || raw.includes('swiss') || raw.includes('paris')) return 'europe';
+    if (raw.includes('africa') || raw.includes('kenya') || raw.includes('safari')) return 'africa';
+    if (raw.includes('cruise')) return 'cruise';
+    return 'dubai';
+  };
+
   const handleEnquire = (dest) => {
-    window.dispatchEvent(
-      new CustomEvent('select-destination', {
-        detail: { destinationName: dest.name },
-      })
-    );
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    const slug = getSlug(dest);
+    window.location.hash = `#packages-${slug}`;
   };
 
   return (
@@ -320,7 +330,16 @@ export default function Destinations() {
                   </div>
 
                   {/* Bottom Action Area with "Enquire Now" & Yellow Arrow Circle */}
-                  <div className="dest-capsule__bottom-action">
+                  <div
+                    className="dest-capsule__bottom-action"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleEnquire(dest);
+                    }}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`View packages for ${dest.name}`}
+                  >
                     <span className="dest-capsule__enquire-label">
                       Enquire Now
                     </span>
@@ -331,7 +350,7 @@ export default function Destinations() {
                         e.stopPropagation();
                         handleEnquire(dest);
                       }}
-                      aria-label={`Enquire now about ${dest.name}`}
+                      aria-label={`View packages for ${dest.name}`}
                     >
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" aria-hidden="true">
                         <line x1="7" y1="17" x2="17" y2="7"></line>
