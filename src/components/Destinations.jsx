@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import destinations from '../data/destinations';
 import businessInfo from '../data/businessInfo';
 import './Destinations.css';
 
-function DestinationCard({ dest, index }) {
+function DestinationCard({ dest, index, isSlide = false }) {
   const waUrl = `${businessInfo.whatsappLink}?text=${encodeURIComponent(dest.whatsappMessage)}`;
 
   const handleEnquire = (e) => {
@@ -18,7 +18,7 @@ function DestinationCard({ dest, index }) {
 
   return (
     <article
-      className="dest-card"
+      className={`dest-card${isSlide ? ' dest-card--slide' : ''}`}
       aria-label={`Destination: ${dest.name}`}
     >
       <div className="dest-card__img-wrap">
@@ -85,7 +85,7 @@ function DestinationCard({ dest, index }) {
           <a
             href="#contact"
             className="dest-card__cta"
-            id={`dest-enquire-${dest.id}-${index}`}
+            id={`dest-enquire-${dest.id}-${index}${isSlide ? '-slide' : ''}`}
             onClick={handleEnquire}
             aria-label={`Enquire about ${dest.name}`}
           >
@@ -100,7 +100,7 @@ function DestinationCard({ dest, index }) {
             target="_blank"
             rel="noopener noreferrer"
             className="dest-card__cta-wa"
-            id={`dest-wa-${dest.id}-${index}`}
+            id={`dest-wa-${dest.id}-${index}${isSlide ? '-slide' : ''}`}
             aria-label={`Chat on WhatsApp about ${dest.name}`}
           >
             <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -117,8 +117,9 @@ function DestinationCard({ dest, index }) {
 
 export default function Destinations() {
   const [activeTab, setActiveTab] = useState('all');
-  const [isPaused, setIsPaused] = useState(false);
-  const trackRef = useRef(null);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
 
   const filtered = destinations.filter((dest) => {
     if (activeTab === 'all') return true;
@@ -133,24 +134,41 @@ export default function Destinations() {
     { id: 'cruise', label: 'Cruise' },
   ];
 
-  // Repeat items so continuous loop spans wide screens and loops seamlessly
-  const repeatCount = Math.max(2, Math.ceil(6 / filtered.length));
-  const singleHalf = [];
-  for (let r = 0; r < repeatCount; r++) {
-    singleHalf.push(...filtered);
-  }
-  const duplicatedList = [...singleHalf, ...singleHalf];
-
-  const handlePrev = () => {
-    if (trackRef.current) {
-      trackRef.current.scrollBy ? trackRef.current.parentElement.scrollBy({ left: -360, behavior: 'smooth' }) : null;
-    }
+  const handleTabChange = (tabId) => {
+    setActiveTab(tabId);
+    setActiveSlide(0);
   };
 
-  const handleNext = () => {
-    if (trackRef.current) {
-      trackRef.current.scrollBy ? trackRef.current.parentElement.scrollBy({ left: 360, behavior: 'smooth' }) : null;
+  const prevSlide = () => {
+    setActiveSlide((curr) => (curr === 0 ? filtered.length - 1 : curr - 1));
+  };
+
+  const nextSlide = () => {
+    setActiveSlide((curr) => (curr === filtered.length - 1 ? 0 : curr + 1));
+  };
+
+  const goToSlide = (index) => {
+    setActiveSlide(index);
+  };
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return;
+    const diff = touchStartX.current - touchEndX.current;
+    if (diff > 45) {
+      nextSlide();
+    } else if (diff < -45) {
+      prevSlide();
     }
+    touchStartX.current = 0;
+    touchEndX.current = 0;
   };
 
   return (
@@ -168,7 +186,7 @@ export default function Destinations() {
               <button
                 key={tab.id}
                 className={`destinations__filter-btn${activeTab === tab.id ? ' destinations__filter-btn--active' : ''}`}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => handleTabChange(tab.id)}
                 role="tab"
                 aria-selected={activeTab === tab.id}
                 type="button"
@@ -179,56 +197,77 @@ export default function Destinations() {
           </div>
         </header>
 
-        {/* Continuous Smooth Marquee Carousel (GPU Composited) */}
+        {/* Mobile Swipe Slider (Hidden on Desktop) */}
         <div
-          className="destinations__marquee-wrapper"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-          onTouchStart={() => setIsPaused(true)}
-          onTouchEnd={() => setTimeout(() => setIsPaused(false), 2000)}
-          aria-label="Continuously moving destinations showcase"
+          className="destinations__slider"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          aria-roledescription="carousel"
+          aria-label="Destination packages carousel"
         >
-          {/* Floating Left Arrow */}
-          <button
-            className="destinations__arrow destinations__arrow--prev"
-            onClick={handlePrev}
-            aria-label="Previous destination"
-            type="button"
+          <div
+            className="destinations__slider-track"
+            style={{ transform: `translateX(-${activeSlide * 100}%)` }}
           >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
-          </button>
-
-          {/* Marquee Track Container */}
-          <div className="destinations__marquee-container">
-            <div
-              ref={trackRef}
-              key={activeTab}
-              className={`destinations__marquee-track${isPaused ? ' destinations__marquee-track--paused' : ''}`}
-            >
-              {duplicatedList.map((dest, i) => (
-                <div
-                  key={`${dest.id}-${i}`}
-                  className="destinations__marquee-slide"
-                >
-                  <DestinationCard dest={dest} index={i} />
-                </div>
-              ))}
-            </div>
+            {filtered.map((dest, i) => (
+              <div key={dest.id} className="destinations__slide" aria-hidden={i !== activeSlide}>
+                <DestinationCard dest={dest} index={i} isSlide={true} />
+              </div>
+            ))}
           </div>
 
-          {/* Floating Right Arrow */}
-          <button
-            className="destinations__arrow destinations__arrow--next"
-            onClick={handleNext}
-            aria-label="Next destination"
-            type="button"
-          >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-          </button>
+          {/* Slider Controls with 44px tap targets */}
+          <div className="destinations__slider-controls">
+            <button
+              className="destinations__slider-btn"
+              onClick={prevSlide}
+              aria-label="Previous destination"
+              type="button"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
+            </button>
+
+            <div className="destinations__slider-counter" aria-live="polite">
+              <span>{activeSlide + 1}</span>
+              <span className="destinations__counter-divider">/</span>
+              <span>{filtered.length}</span>
+            </div>
+
+            <div className="destinations__slider-dots" role="tablist" aria-label="Destination slides">
+              {filtered.map((dest, i) => (
+                <button
+                  key={dest.id}
+                  className={`destinations__slider-dot${i === activeSlide ? ' destinations__slider-dot--active' : ''}`}
+                  onClick={() => goToSlide(i)}
+                  aria-label={`Slide ${i + 1}: ${dest.name}`}
+                  aria-selected={i === activeSlide}
+                  role="tab"
+                  type="button"
+                />
+              ))}
+            </div>
+
+            <button
+              className="destinations__slider-btn"
+              onClick={nextSlide}
+              aria-label="Next destination"
+              type="button"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Desktop Grid Layout (Hidden on Mobile) */}
+        <div className="destinations__grid">
+          {filtered.map((dest, i) => (
+            <DestinationCard key={dest.id} dest={dest} index={i} isSlide={false} />
+          ))}
         </div>
       </div>
     </section>

@@ -128,7 +128,7 @@ export default function PromoBanner() {
                 title="Explore Dubai Packages"
               >
                 <span className="promo-banner__deal-title">Dubai</span>
-                <span className="promo-banner__deal-price">Custom Package</span>
+                <span className="promo-banner__deal-sub">Custom Plan</span>
               </button>
 
               <div className="promo-banner__divider" aria-hidden="true" />
@@ -141,7 +141,7 @@ export default function PromoBanner() {
                 title="Explore Bali Packages"
               >
                 <span className="promo-banner__deal-title">Bali</span>
-                <span className="promo-banner__deal-price">Custom Package</span>
+                <span className="promo-banner__deal-sub">Custom Plan</span>
               </button>
 
               <div className="promo-banner__divider" aria-hidden="true" />
@@ -154,7 +154,7 @@ export default function PromoBanner() {
                 title="Explore Vietnam Packages"
               >
                 <span className="promo-banner__deal-title">Vietnam</span>
-                <span className="promo-banner__deal-price">Custom Package</span>
+                <span className="promo-banner__deal-sub">Custom Plan</span>
                 <span className="promo-banner__deal-badge">Special Offer</span>
               </button>
             </div>
@@ -164,4 +164,3 @@ export default function PromoBanner() {
     </section>
   );
 }
-
