@@ -91,24 +91,44 @@ const destinationThemeMap = {
   },
 };
 
+// Seamless 3x looping array: ensures Dubai starts centered with Cruise on the left and Vietnam on the right!
+const loopingDestinations = [
+  ...destinations.map((d) => ({ ...d, loopKey: `prev-${d.id}` })),
+  ...destinations.map((d) => ({ ...d, loopKey: `curr-${d.id}` })),
+  ...destinations.map((d) => ({ ...d, loopKey: `next-${d.id}` })),
+];
+
+const INITIAL_INDEX = destinations.length; // Index 9: Dubai centered with left & right peeks!
+
 export default function Destinations() {
   const scrollTrackRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
+  const [activeIndex, setActiveIndex] = useState(INITIAL_INDEX);
+  const isAdjustingRef = useRef(false);
+
+  const scrollToIndex = (index) => {
+    const track = scrollTrackRef.current;
+    if (!track) return;
+    const items = track.querySelectorAll('.dest-capsule');
+    if (items[index]) {
+      const targetItem = items[index];
+      const targetScroll =
+        targetItem.offsetLeft - (track.clientWidth - targetItem.offsetWidth) / 2;
+      track.scrollTo({ left: targetScroll, behavior: 'smooth' });
+      setActiveIndex(index);
+    }
+  };
 
   const handleScroll = useCallback(() => {
+    if (isAdjustingRef.current) return;
     const track = scrollTrackRef.current;
     if (!track) return;
 
-    const { scrollLeft, scrollWidth, clientWidth } = track;
-    setCanScrollLeft(scrollLeft > 15);
-    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 15);
-
-    // Identify which capsule is closest to the screen center on mobile/tablet
+    const { scrollLeft, clientWidth } = track;
     const centerPos = scrollLeft + clientWidth / 2;
     const items = track.querySelectorAll('.dest-capsule');
-    let closestIndex = 0;
+    if (!items.length) return;
+
+    let closestIndex = INITIAL_INDEX;
     let closestDist = Infinity;
 
     items.forEach((item, index) => {
@@ -121,34 +141,59 @@ export default function Destinations() {
     });
 
     setActiveIndex(closestIndex);
+
+    // Infinite loop jump when reaching near outer thirds of the list
+    const setSize = destinations.length;
+    const itemStride = items[1] ? items[1].offsetLeft - items[0].offsetLeft : 186;
+    const loopDistance = setSize * itemStride;
+
+    if (closestIndex < 3) {
+      isAdjustingRef.current = true;
+      track.scrollLeft += loopDistance;
+      setActiveIndex(closestIndex + setSize);
+      setTimeout(() => {
+        isAdjustingRef.current = false;
+      }, 60);
+    } else if (closestIndex >= loopingDestinations.length - 3) {
+      isAdjustingRef.current = true;
+      track.scrollLeft -= loopDistance;
+      setActiveIndex(closestIndex - setSize);
+      setTimeout(() => {
+        isAdjustingRef.current = false;
+      }, 60);
+    }
   }, []);
 
+  // Initial center alignment so Dubai starts in center with previous & next cards visible
   useEffect(() => {
-    handleScroll();
     const track = scrollTrackRef.current;
-    if (track) {
-      track.addEventListener('scroll', handleScroll, { passive: true });
-      window.addEventListener('resize', handleScroll);
-    }
+    if (!track) return;
+
+    const centerInitial = () => {
+      const items = track.querySelectorAll('.dest-capsule');
+      if (items[INITIAL_INDEX]) {
+        const targetItem = items[INITIAL_INDEX];
+        const targetScroll =
+          targetItem.offsetLeft - (track.clientWidth - targetItem.offsetWidth) / 2;
+        track.scrollLeft = targetScroll;
+        setActiveIndex(INITIAL_INDEX);
+      }
+    };
+
+    centerInitial();
+    const raf = requestAnimationFrame(centerInitial);
+    const timer = setTimeout(centerInitial, 80);
+
+    track.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+
     return () => {
-      if (track) track.removeEventListener('scroll', handleScroll);
+      cancelAnimationFrame(raf);
+      clearTimeout(timer);
+      track.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
     };
   }, [handleScroll]);
-
-  const scrollToIndex = (index) => {
-    const track = scrollTrackRef.current;
-    if (!track) return;
-    const items = track.querySelectorAll('.dest-capsule');
-    const clampedIndex = Math.max(0, Math.min(items.length - 1, index));
-    const targetItem = items[clampedIndex];
-    if (targetItem) {
-      const targetScroll =
-        targetItem.offsetLeft - (track.clientWidth - targetItem.offsetWidth) / 2;
-      track.scrollTo({ left: targetScroll, behavior: 'smooth' });
-      setActiveIndex(clampedIndex);
-    }
-  };
 
   const handleEnquire = (dest) => {
     window.dispatchEvent(
@@ -174,11 +219,8 @@ export default function Destinations() {
           <div className="destinations__nav-arrows" aria-label="Destination carousel controls">
             <button
               type="button"
-              className={`destinations__arrow-btn destinations__arrow-btn--prev${
-                canScrollLeft ? ' destinations__arrow-btn--active' : ''
-              }`}
+              className="destinations__arrow-btn destinations__arrow-btn--active"
               onClick={() => scrollToIndex(activeIndex - 1)}
-              disabled={!canScrollLeft}
               aria-label="Previous destination"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -187,11 +229,8 @@ export default function Destinations() {
             </button>
             <button
               type="button"
-              className={`destinations__arrow-btn destinations__arrow-btn--next${
-                canScrollRight ? ' destinations__arrow-btn--active' : ''
-              }`}
+              className="destinations__arrow-btn destinations__arrow-btn--active"
               onClick={() => scrollToIndex(activeIndex + 1)}
-              disabled={!canScrollRight}
               aria-label="Next destination"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -201,7 +240,7 @@ export default function Destinations() {
           </div>
         </div>
 
-        {/* Capsule Carousel Track with Center Coverflow Snap */}
+        {/* Capsule Carousel Track with Infinite Center Coverflow */}
         <div className="destinations__carousel-wrapper">
           <div
             ref={scrollTrackRef}
@@ -209,7 +248,7 @@ export default function Destinations() {
             role="region"
             aria-label="Trending Holiday Destination Capsules"
           >
-            {destinations.map((dest, i) => {
+            {loopingDestinations.map((dest, i) => {
               const theme = destinationThemeMap[dest.id] || {
                 skyGradient: 'linear-gradient(180deg, #38bdf8 0%, #0369a1 45%, #0f172a 100%)',
                 textColor: '#ffffff',
@@ -221,7 +260,7 @@ export default function Destinations() {
 
               return (
                 <article
-                  key={dest.id}
+                  key={dest.loopKey}
                   className={`dest-capsule${isActive ? ' dest-capsule--active' : ''}`}
                   style={{ background: theme.skyGradient }}
                   onClick={() => {
