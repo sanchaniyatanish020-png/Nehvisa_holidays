@@ -31,8 +31,25 @@ const ServiceIcon = ({ type }) => {
         <path d="M16 3.13a4 4 0 010 7.75"/>
       </svg>
     ),
+    visa: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+        <rect x="3" y="4" width="18" height="16" rx="2"/>
+        <line x1="7" y1="8" x2="17" y2="8"/>
+        <line x1="7" y1="12" x2="13" y2="12"/>
+        <circle cx="16" cy="14" r="2"/>
+      </svg>
+    ),
+    food: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+        <path d="M18 8h1a4 4 0 010 8h-1"/>
+        <path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/>
+        <line x1="6" y1="1" x2="6" y2="4"/>
+        <line x1="10" y1="1" x2="10" y2="4"/>
+        <line x1="14" y1="1" x2="14" y2="4"/>
+      </svg>
+    ),
   };
-  return icons[type] || null;
+  return icons[type] || icons.international;
 };
 
 export default function Services() {
@@ -56,42 +73,42 @@ export default function Services() {
       <div className="container">
         <header className="section-header">
           <p className="section-label fade-up">What We Offer</p>
-          <h2 id="services-heading" className="section-title fade-up">Our Services</h2>
+          <h2 id="services-heading" className="section-title fade-up">Our Travel Services in Surat</h2>
           <p className="section-subtitle fade-up">
-            Travel planning made simple, comfortable and personalized.
+            Customized international tour packages, flight booking, visa assistance, and Gujarati &amp; Jain food friendly travel arrangements.
           </p>
         </header>
 
         <div className="services__grid">
           {services.map((service, i) => (
             <article
-                key={service.id}
-                className="service-card fade-up"
-                style={{ transitionDelay: `${i * 0.1}s` }}
-                aria-label={`Service: ${service.title}`}
+              key={service.id}
+              className="service-card fade-up"
+              style={{ transitionDelay: `${i * 0.08}s` }}
+              aria-label={`Service: ${service.title}`}
+            >
+              <div className="service-card__icon" aria-hidden="true">
+                <ServiceIcon type={service.svgIcon} />
+              </div>
+              <h3 className="service-card__title">{service.title}</h3>
+              <p className="service-card__desc">{service.description}</p>
+              <a
+                href="#contact"
+                className="service-card__cta"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                aria-label={`Enquire about ${service.title}`}
               >
-                <div className="service-card__icon" aria-hidden="true">
-                  <ServiceIcon type={service.svgIcon} />
-                </div>
-                <h3 className="service-card__title">{service.title}</h3>
-                <p className="service-card__desc">{service.description}</p>
-                <a
-                  href="#contact"
-                  className="service-card__cta"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  aria-label={`Enquire about ${service.title}`}
-                >
-                  <span>Enquire Now</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                  </svg>
-                </a>
-                <div className="service-card__accent" aria-hidden="true"></div>
-              </article>
+                <span>Enquire Now</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+              <div className="service-card__accent" aria-hidden="true"></div>
+            </article>
           ))}
         </div>
       </div>
