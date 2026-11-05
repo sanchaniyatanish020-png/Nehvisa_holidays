@@ -1,6 +1,6 @@
-/* ---- TESTIMONIALS & GOOGLE REVIEWS SECTION ---- */
+/* ---- GOOGLE REVIEWS & LIVE GOOGLE MAPS VIEW SECTION ---- */
 .testimonials {
-  background: var(--color-white);
+  background: #f8fafc;
   padding-top: 80px;
   padding-bottom: 80px;
   position: relative;
@@ -20,7 +20,7 @@
 .testimonials__header-left {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   max-width: 680px;
 }
 
@@ -33,20 +33,21 @@
   letter-spacing: -0.02em;
 }
 
-/* Rating Badge (Matching Trustpilot / Google style in reference) */
+/* Google Rating Pill Badge */
 .testimonials__rating-badge {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 10px 14px;
   font-size: 13.5px;
+  margin-top: 4px;
 }
 
 .testimonials__stars-pill {
   display: inline-flex;
   align-items: center;
   gap: 2px;
-  background: #00b67a; /* Clean verified review green */
+  background: #00b67a;
   padding: 4px 8px;
   border-radius: 4px;
 }
@@ -60,16 +61,16 @@
 .testimonials__rating-score {
   font-weight: 700;
   color: #0a1032;
-  font-size: 14px;
+  font-size: 14.5px;
 }
 
 .testimonials__source-info {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   color: #64748b;
   font-size: 13px;
-  padding-left: 6px;
+  padding-left: 8px;
   border-left: 1px solid #cbd5e1;
 }
 
@@ -86,7 +87,7 @@
   color: #64748b;
 }
 
-/* Right Header Action Buttons */
+/* Header Action Buttons */
 .testimonials__actions {
   display: flex;
   align-items: center;
@@ -99,13 +100,13 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 9px 20px;
-  min-height: 42px;
+  padding: 10px 22px;
+  min-height: 44px;
   font-size: 14px;
   font-weight: 600;
   border-radius: 9999px;
-  border: 1px solid #e2e8f0;
-  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
   color: #0f172a;
   text-decoration: none;
   transition: all 0.2s ease;
@@ -114,19 +115,23 @@
 }
 
 .testimonials__action-btn:hover {
-  background: #ffffff;
-  border-color: #cbd5e1;
+  background: #f1f5f9;
+  border-color: #94a3b8;
   color: var(--color-blue);
   box-shadow: 0 4px 12px rgba(10, 16, 50, 0.08);
   transform: translateY(-1px);
 }
 
-.testimonials__action-btn:active {
-  transform: scale(0.97);
+.testimonials__action-btn--write {
+  background: #ffffff;
+  border-color: #0a1032;
+  color: #0a1032;
+  font-weight: 700;
 }
 
-.testimonials__action-btn--write {
-  background: #f1f5f9;
+.testimonials__action-btn--write:hover {
+  background: #0a1032;
+  color: #ffffff;
 }
 
 .testimonials__chevron-icon {
@@ -136,227 +141,241 @@
   margin-left: 2px;
 }
 
-/* Slider Track Wrapper */
-.testimonials__slider-wrapper {
-  position: relative;
-  width: 100%;
-}
-
-.testimonials__track {
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  padding: 8px 4px 20px 4px;
-  scrollbar-width: none; /* Hide standard scrollbar */
-}
-
-.testimonials__track::-webkit-scrollbar {
-  display: none;
-}
-
-.testimonials__track-slide {
-  flex: 0 0 320px;
-  scroll-snap-align: start;
-}
-
-/* Review Card (Matching user screenshot) */
-.testi-card {
+/* ---- LIVE GOOGLE MAP & BUSINESS CARD VIEW ---- */
+.gmap-view-card {
   background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 18px;
-  padding: 24px 22px;
-  display: flex;
-  flex-direction: column;
-  min-height: 250px;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
-  transition: all 0.25s ease;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 12px 36px rgba(10, 16, 50, 0.08);
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  min-height: 480px;
 }
 
-.testi-card:hover {
-  border-color: #cbd5e1;
-  box-shadow: 0 10px 24px rgba(10, 16, 50, 0.08);
-  transform: translateY(-4px);
-}
-
-/* Card Stars (Bright Orange/Coral as shown in reference) */
-.testi-card__stars {
-  color: #ff5e28;
-  font-size: 16px;
-  letter-spacing: 2px;
-  margin-bottom: 12px;
-}
-
-.testi-card__title {
-  font-family: var(--font-heading);
-  font-size: 15.5px;
-  font-weight: 700;
-  color: #0f172a;
-  line-height: 1.35;
-  margin-bottom: 10px;
-}
-
-.testi-card__text {
-  font-size: 13.5px;
-  line-height: 1.6;
-  color: #475569;
-  flex: 1;
-  margin-bottom: 12px;
-}
-
-.testi-card__readmore {
-  background: none;
-  border: none;
-  padding: 0;
-  font-size: 13px;
-  font-weight: 700;
-  color: #0284c7;
-  cursor: pointer;
-  text-align: left;
-  margin-bottom: 14px;
-  transition: color 0.15s ease;
-}
-
-.testi-card__readmore:hover {
-  color: #0369a1;
-  text-decoration: underline;
-}
-
-/* Direct Google Review Invite Card */
-.testi-card--cta {
-  background: linear-gradient(145deg, #f8fafc 0%, #eef2ff 100%);
-  border: 1.5px dashed #c7d2fe;
+/* Left: Google Listing Info */
+.gmap-view-card__info {
+  padding: 40px 36px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background: #ffffff;
+}
+
+.gmap-view-card__badge-row {
+  display: flex;
   align-items: center;
-  text-align: center;
-  padding: 28px 24px;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
 }
 
-.testi-card--cta:hover {
-  border-color: #6366f1;
-  border-style: solid;
+.gmap-view-card__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #1e3a8a;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  padding: 4px 12px;
+  border-radius: 9999px;
 }
 
-.testi-card__cta-icon {
-  margin-bottom: 12px;
+.gmap-view-card__rating-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 800;
+  color: #b45309;
+  background: #fef3c7;
+  padding: 4px 10px;
+  border-radius: 9999px;
 }
 
-.testi-card--cta .testi-card__title {
-  font-size: 17px;
-  color: var(--color-navy);
-  margin-bottom: 8px;
+.gmap-view-card__name {
+  font-family: var(--font-heading);
+  font-size: 26px;
+  font-weight: 800;
+  color: #0a1032;
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
 }
 
-.testi-card--cta .testi-card__text {
-  font-size: 13px;
+.gmap-view-card__cat {
+  font-size: 14px;
   color: #64748b;
-  margin-bottom: 16px;
-  flex: none;
+  margin-bottom: 24px;
 }
 
-.testi-card__cta-btn {
+/* Rating Score Box */
+.gmap-view-card__rating-box {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+
+.gmap-view-card__score {
+  font-size: 38px;
+  font-weight: 800;
+  color: #0a1032;
+  line-height: 1;
+}
+
+.gmap-view-card__score-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.gmap-view-card__stars {
+  color: #f59e0b;
+  font-size: 18px;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+
+.gmap-view-card__review-sub {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+/* Listing Details */
+.gmap-view-card__details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+  list-style: none;
+  padding: 0;
+}
+
+.gmap-view-card__details li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14px;
+  color: #334155;
+  line-height: 1.5;
+}
+
+.gmap-view-card__details svg {
+  color: var(--color-blue);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Direct Action Buttons */
+.gmap-view-card__ctas {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.gmap-view-card__btn-write {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 22px;
+  gap: 8px;
   background: #1a1f5e;
   color: #ffffff;
-  font-size: 13.5px;
+  padding: 12px 22px;
+  min-height: 48px;
+  font-size: 14.5px;
   font-weight: 700;
   border-radius: 9999px;
   text-decoration: none;
-  box-shadow: 0 4px 12px rgba(26, 31, 94, 0.2);
+  box-shadow: 0 4px 14px rgba(26, 31, 94, 0.25);
   transition: all 0.2s ease;
 }
 
-.testi-card__cta-btn:hover {
+.gmap-view-card__btn-write:hover {
   background: #2563eb;
   color: #ffffff;
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
 }
 
-/* Card Footer */
-.testi-card__footer {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 12px;
-  padding-top: 14px;
-  border-top: 1px solid #f1f5f9;
-  margin-top: auto;
-}
-
-.testi-card__author-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.testi-card__name {
-  font-size: 14px;
-  font-weight: 700;
-  color: #0f172a;
-}
-
-.testi-card__location {
-  font-size: 11.5px;
-  color: #64748b;
-}
-
-.testi-card__date {
-  font-size: 12px;
-  color: #94a3b8;
-  white-space: nowrap;
-}
-
-/* Navigation Arrow Buttons for Desktop */
-.testimonials__nav-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  color: #0f172a;
-  font-size: 20px;
-  font-weight: 600;
-  display: flex;
+.gmap-view-card__btn-directions {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(10, 16, 50, 0.1);
-  cursor: pointer;
-  z-index: 5;
+  gap: 8px;
+  background: #ffffff;
+  color: #0a1032;
+  border: 1.5px solid #cbd5e1;
+  padding: 12px 20px;
+  min-height: 48px;
+  font-size: 14.5px;
+  font-weight: 700;
+  border-radius: 9999px;
+  text-decoration: none;
   transition: all 0.2s ease;
 }
 
-.testimonials__nav-btn:hover {
-  background: #0f172a;
-  color: #ffffff;
-  border-color: #0f172a;
+.gmap-view-card__btn-directions:hover {
+  background: #f1f5f9;
+  border-color: #0a1032;
+  transform: translateY(-2px);
 }
 
-.testimonials__nav-btn--prev {
-  left: -20px;
+/* Right: Map Embed Wrap */
+.gmap-view-card__map-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 440px;
+  background: #e2e8f0;
 }
 
-.testimonials__nav-btn--next {
-  right: -20px;
+.gmap-view-card__map-wrap iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.gmap-view-card__map-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 440px;
+  background: #f1f5f9;
+}
+
+.gmap-view-card__loading-text {
+  font-size: 14px;
+  color: #64748b;
+  font-weight: 600;
 }
 
 /* Responsive adjustments */
-@media (max-width: 1024px) {
-  .testimonials__nav-btn {
-    display: none;
+@media (max-width: 960px) {
+  .gmap-view-card {
+    grid-template-columns: 1fr;
+    border-radius: 20px;
+  }
+
+  .gmap-view-card__info {
+    padding: 32px 24px;
+  }
+
+  .gmap-view-card__map-wrap {
+    min-height: 380px;
+    height: 380px;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .testimonials {
     padding-top: 56px;
     padding-bottom: 56px;
@@ -365,7 +384,7 @@
   .testimonials__header-row {
     flex-direction: column;
     align-items: flex-start;
-    gap: 18px;
+    gap: 16px;
     margin-bottom: 24px;
   }
 
@@ -377,7 +396,7 @@
     flex: 1;
     font-size: 13.5px;
     padding: 9px 14px;
-    min-height: 40px;
+    min-height: 42px;
   }
 
   .testimonials__source-info {
@@ -386,18 +405,26 @@
     width: 100%;
   }
 
-  .testimonials__track-slide {
-    flex: 0 0 280px;
-  }
-}
-
-@media (max-width: 480px) {
-  .testimonials__track-slide {
-    flex: 0 0 260px;
+  .gmap-view-card__info {
+    padding: 24px 20px;
   }
 
-  .testi-card {
-    padding: 20px 18px;
-    min-height: 230px;
+  .gmap-view-card__name {
+    font-size: 22px;
+  }
+
+  .gmap-view-card__ctas {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .gmap-view-card__btn-write,
+  .gmap-view-card__btn-directions {
+    width: 100%;
+  }
+
+  .gmap-view-card__map-wrap {
+    min-height: 320px;
+    height: 320px;
   }
 }

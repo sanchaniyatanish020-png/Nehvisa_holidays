@@ -448,7 +448,7 @@ export default function Contact() {
             {loadMap ? (
               <iframe
                 title="Nehvisa Holidays Office Location - 204 Infinity Business Hub Surat"
-                src="https://maps.google.com/maps?q=204%2C%20Infinity%20Business%20Hub%2C%20Palanpor%20Canal%20Road%2C%20Palanpor%2C%20Surat%2C%20Gujarat%20395009&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                src={businessInfo.mapsEmbed}
                 width="100%"
                 height="420"
                 style={{ border: 0, display: 'block' }}
