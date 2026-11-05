@@ -182,220 +182,251 @@ export default function Contact() {
       </div>
 
       <div className="container contact-with-bg__container">
-        {/* Header */}
-        <header className="contact-with-bg__header">
-          <span className="contact-with-bg__badge">Custom Vacation Planner</span>
-          <h2 id="contact-heading" className="contact-with-bg__title">
-            Customize Your Travel Itinerary
-          </h2>
-          <p className="contact-with-bg__subtitle">
-            Tell us your preferences and our travel experts will design the ideal holiday for you.
-          </p>
-        </header>
+        <div className="contact-split__layout">
+          {/* Left Column: Heading & Subtitle exactly matching reference image */}
+          <div className="contact-split__intro">
+            <span className="contact-split__badge">Nehvisa Holidays · Vacation Planner</span>
+            <h2 id="contact-heading" className="contact-split__title">
+              Need help<br />choosing<br />your destination?
+            </h2>
+            <p className="contact-split__subtitle">
+              Speak to our travel expert for a trip tailored just for you.
+            </p>
 
-        {/* Interactive Trip Planner Form Card */}
-        <div className="contact__planner-box">
-          <form className="contact__planner-form" onSubmit={handleWhatsAppSubmit}>
-            <div className="planner__grid">
-              {/* Field 1: Your Full Name */}
-              <div className="planner__group">
-                <label htmlFor="planner-name">Your Full Name</label>
-                <input
-                  id="planner-name"
-                  type="text"
-                  name="name"
-                  autoComplete="name"
-                  enterKeyHint="next"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="e.g. Rahul Sharma"
-                  required
-                />
+            <ul className="contact-split__perks" aria-label="Key highlights">
+              <li>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>100% Customized Tour Itineraries</span>
+              </li>
+              <li>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Direct WhatsApp &amp; Call Consultation</span>
+              </li>
+              <li>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Surat, Gujarat &amp; Worldwide Travel</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Right Column: Original Form Card positioned on the right */}
+          <div className="contact-split__card-wrap">
+            <div className="contact__planner-box">
+              <div className="contact__planner-card-header">
+                <h3 className="contact__planner-card-title">Customize Your Travel Itinerary</h3>
+                <p className="contact__planner-card-desc">Tell us your preferences for an instant custom quote</p>
               </div>
 
-              {/* Field 2: Contact Phone Number */}
-              <div className="planner__group">
-                <label htmlFor="planner-phone">Contact Phone Number</label>
-                <input
-                  id="planner-phone"
-                  type="tel"
-                  name="phone"
-                  inputMode="tel"
-                  autoComplete="tel"
-                  enterKeyHint="next"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  placeholder="e.g. 98765 43210 or +91 98765 43210"
-                  aria-invalid={!!phoneError}
-                  aria-describedby={phoneError ? 'planner-phone-error' : undefined}
-                  required
-                />
-                {phoneError && (
-                  <p id="planner-phone-error" className="planner__error-msg" role="alert">
-                    {phoneError}
-                  </p>
-                )}
-              </div>
-
-              {/* Field 3: Preferred Destination */}
-              <div className="planner__group">
-                <label htmlFor="planner-destination">Preferred Destination</label>
-                <select
-                  id="planner-destination"
-                  name="destination"
-                  value={formData.destination}
-                  onChange={handleChange}
-                >
-                  {destinations.map((d) => (
-                    <option key={d.id} value={d.name}>
-                      {d.name} ({d.region})
-                    </option>
-                  ))}
-                  <option value="Europe">Europe / Switzerland &amp; Paris</option>
-                  <option value="Other / Customized">Other / Customized Destination</option>
-                </select>
-              </div>
-
-              {/* Field 4: Service Required */}
-              <div className="planner__group">
-                <label htmlFor="planner-type">Service Required</label>
-                <select
-                  id="planner-type"
-                  name="tourType"
-                  value={formData.tourType}
-                  onChange={handleChange}
-                >
-                  <option value="International Tour Package">International Tour Package</option>
-                  <option value="Flight &amp; Hotel Booking">Flight &amp; Hotel Booking</option>
-                  <option value="Family Vacation">Family Vacation</option>
-                  <option value="Group Tour">Group Tour</option>
-                  <option value="Honeymoon Package">Honeymoon Package</option>
-                </select>
-              </div>
-
-              {/* Field 5: Adults (12+ Years) */}
-              <div className="planner__group">
-                <label htmlFor="planner-adults">Adults (12+ Years)</label>
-                <select
-                  id="planner-adults"
-                  name="adults"
-                  value={adults}
-                  onChange={(e) => setAdults(e.target.value)}
-                >
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
-                    <option key={num} value={num}>
-                      {num} {num === 1 ? 'Adult' : 'Adults'}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Field 6: Child (1 to 12 Years) */}
-              <div className="planner__group">
-                <label htmlFor="planner-children">Child (1 to 12 Years)</label>
-                <select
-                  id="planner-children"
-                  name="children"
-                  value={children}
-                  onChange={handleChildrenChange}
-                >
-                  <option value="0">0 Child (None)</option>
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
-                    <option key={num} value={num}>
-                      {num} {num === 1 ? 'Child' : 'Children'}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Dynamic Child Ages dropdowns if child selected */}
-              {parseInt(children, 10) > 0 && (
-                <div className="planner__child-ages-container planner__group--full">
-                  <div className="planner__child-ages-header">
-                    <span className="planner__child-ages-icon" aria-hidden="true">👶</span>
-                    <span className="planner__child-ages-title">
-                      Age of Child ({parseInt(children, 10) === 1 ? 'Select Age (1 - 12 Years)' : 'Select Age for Each Child (1 - 12 Years)'}):
-                    </span>
+              <form className="contact__planner-form" onSubmit={handleWhatsAppSubmit}>
+                <div className="planner__grid">
+                  {/* Field 1: Your Full Name */}
+                  <div className="planner__group">
+                    <label htmlFor="planner-name">Your Full Name</label>
+                    <input
+                      id="planner-name"
+                      type="text"
+                      name="name"
+                      autoComplete="name"
+                      enterKeyHint="next"
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="e.g. Rahul Sharma"
+                      required
+                    />
                   </div>
-                  <div className="planner__child-ages-grid">
-                    {Array.from({ length: parseInt(children, 10) }).map((_, i) => (
-                      <div key={i} className="planner__child-age-field">
-                        <label htmlFor={`child-age-${i}`}>
-                          Child {i + 1} Age
-                        </label>
-                        <select
-                          id={`child-age-${i}`}
-                          value={childAges[i] || '5 Years'}
-                          onChange={(e) => handleChildAgeChange(i, e.target.value)}
-                        >
-                          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((age) => (
-                            <option key={age} value={`${age} ${age === 1 ? 'Year' : 'Years'}`}>
-                              {age} {age === 1 ? 'Year' : 'Years'}
-                            </option>
-                          ))}
-                        </select>
+
+                  {/* Field 2: Contact Phone Number */}
+                  <div className="planner__group">
+                    <label htmlFor="planner-phone">Contact Phone Number</label>
+                    <input
+                      id="planner-phone"
+                      type="tel"
+                      name="phone"
+                      inputMode="tel"
+                      autoComplete="tel"
+                      enterKeyHint="next"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="e.g. 98765 43210 or +91 98765 43210"
+                      aria-invalid={!!phoneError}
+                      aria-describedby={phoneError ? 'planner-phone-error' : undefined}
+                      required
+                    />
+                    {phoneError && (
+                      <p id="planner-phone-error" className="planner__error-msg" role="alert">
+                        {phoneError}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Field 3: Preferred Destination */}
+                  <div className="planner__group">
+                    <label htmlFor="planner-destination">Preferred Destination</label>
+                    <select
+                      id="planner-destination"
+                      name="destination"
+                      value={formData.destination}
+                      onChange={handleChange}
+                    >
+                      {destinations.map((d) => (
+                        <option key={d.id} value={d.name}>
+                          {d.name} ({d.region})
+                        </option>
+                      ))}
+                      <option value="Europe">Europe / Switzerland &amp; Paris</option>
+                      <option value="Other / Customized">Other / Customized Destination</option>
+                    </select>
+                  </div>
+
+                  {/* Field 4: Service Required */}
+                  <div className="planner__group">
+                    <label htmlFor="planner-type">Service Required</label>
+                    <select
+                      id="planner-type"
+                      name="tourType"
+                      value={formData.tourType}
+                      onChange={handleChange}
+                    >
+                      <option value="International Tour Package">International Tour Package</option>
+                      <option value="Flight &amp; Hotel Booking">Flight &amp; Hotel Booking</option>
+                      <option value="Family Vacation">Family Vacation</option>
+                      <option value="Group Tour">Group Tour</option>
+                      <option value="Honeymoon Package">Honeymoon Package</option>
+                    </select>
+                  </div>
+
+                  {/* Field 5: Adults (12+ Years) */}
+                  <div className="planner__group">
+                    <label htmlFor="planner-adults">Adults (12+ Years)</label>
+                    <select
+                      id="planner-adults"
+                      name="adults"
+                      value={adults}
+                      onChange={(e) => setAdults(e.target.value)}
+                    >
+                      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
+                        <option key={num} value={num}>
+                          {num} {num === 1 ? 'Adult' : 'Adults'}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Field 6: Child (1 to 12 Years) */}
+                  <div className="planner__group">
+                    <label htmlFor="planner-children">Child (1 to 12 Years)</label>
+                    <select
+                      id="planner-children"
+                      name="children"
+                      value={children}
+                      onChange={handleChildrenChange}
+                    >
+                      <option value="0">0 Child (None)</option>
+                      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
+                        <option key={num} value={num}>
+                          {num} {num === 1 ? 'Child' : 'Children'}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Dynamic Child Ages dropdowns if child selected */}
+                  {parseInt(children, 10) > 0 && (
+                    <div className="planner__child-ages-container planner__group--full">
+                      <div className="planner__child-ages-header">
+                        <span className="planner__child-ages-icon" aria-hidden="true">👶</span>
+                        <span className="planner__child-ages-title">
+                          Age of Child ({parseInt(children, 10) === 1 ? 'Select Age (1 - 12 Years)' : 'Select Age for Each Child (1 - 12 Years)'}):
+                        </span>
                       </div>
-                    ))}
+                      <div className="planner__child-ages-grid">
+                        {Array.from({ length: parseInt(children, 10) }).map((_, i) => (
+                          <div key={i} className="planner__child-age-field">
+                            <label htmlFor={`child-age-${i}`}>
+                              Child {i + 1} Age
+                            </label>
+                            <select
+                              id={`child-age-${i}`}
+                              value={childAges[i] || '5 Years'}
+                              onChange={(e) => handleChildAgeChange(i, e.target.value)}
+                            >
+                              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((age) => (
+                                <option key={age} value={`${age} ${age === 1 ? 'Year' : 'Years'}`}>
+                                  {age} {age === 1 ? 'Year' : 'Years'}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Field 7: Approximate Travel Date */}
+                  <div className="planner__group planner__group--full">
+                    <label htmlFor="planner-date">📅 Approximate Travel Date</label>
+                    <input
+                      id="planner-date"
+                      type="date"
+                      name="travelDate"
+                      value={formData.travelDate}
+                      onChange={handleChange}
+                      min={new Date().toISOString().split('T')[0]}
+                      style={{ cursor: 'pointer' }}
+                    />
+                  </div>
+
+                  {/* Field 8: Special Requests / Preferences */}
+                  <div className="planner__group planner__group--full">
+                    <label htmlFor="planner-notes">Special Requests / Preferences</label>
+                    <textarea
+                      id="planner-notes"
+                      name="notes"
+                      rows="2"
+                      enterKeyHint="done"
+                      value={formData.notes}
+                      onChange={handleChange}
+                      placeholder="Hotel preference, vegetarian / Jain meals, specific sights, budget, or flight arrangements..."
+                    ></textarea>
                   </div>
                 </div>
-              )}
 
-              {/* Field 7: Approximate Travel Date */}
-              <div className="planner__group">
-                <label htmlFor="planner-date">📅 Approximate Travel Date</label>
-                <input
-                  id="planner-date"
-                  type="date"
-                  name="travelDate"
-                  value={formData.travelDate}
-                  onChange={handleChange}
-                  min={new Date().toISOString().split('T')[0]}
-                  style={{ cursor: 'pointer' }}
-                />
-              </div>
+                {/* Buttons: Request Custom Quotation & Send via Email */}
+                <div className="planner__actions">
+                  <button
+                    type="submit"
+                    className="btn btn-navy planner__btn-wa"
+                    id="planner-submit-whatsapp"
+                  >
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
+                      <line x1="22" y1="2" x2="11" y2="13"></line>
+                      <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                    <span>Request Custom Quotation</span>
+                  </button>
 
-              {/* Field 8: Special Requests / Preferences */}
-              <div className="planner__group planner__group--full">
-                <label htmlFor="planner-notes">Special Requests / Preferences</label>
-                <textarea
-                  id="planner-notes"
-                  name="notes"
-                  rows="2"
-                  enterKeyHint="done"
-                  value={formData.notes}
-                  onChange={handleChange}
-                  placeholder="Any preferences for hotel type, specific sights, budget, or flight arrangements..."
-                ></textarea>
-              </div>
+                  <button
+                    type="button"
+                    onClick={handleEmailSubmit}
+                    className="btn btn-outline planner__btn-email"
+                    id="planner-submit-email"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                      <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                    <span>Send via Email</span>
+                  </button>
+                </div>
+              </form>
             </div>
-
-            {/* Buttons: Request Custom Quotation & Send via Email */}
-            <div className="planner__actions">
-              <button
-                type="submit"
-                className="btn btn-navy planner__btn-wa"
-                id="planner-submit-whatsapp"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
-                  <line x1="22" y1="2" x2="11" y2="13"></line>
-                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                </svg>
-                Request Custom Quotation
-              </button>
-              <button
-                type="button"
-                onClick={handleEmailSubmit}
-                className="btn btn-outline planner__btn-email"
-                id="planner-submit-email"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                  <polyline points="22,6 12,13 2,6"/>
-                </svg>
-                Send via Email
-              </button>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
     </section>

@@ -1,15 +1,15 @@
-/* ---- CONTACT SECTION WITH SCENIC BACKGROUND IMAGE ---- */
+/* ---- CONTACT SECTION WITH SCENIC BACKGROUND IMAGE & SPLIT LAYOUT ---- */
 .contact-with-bg {
   position: relative;
   overflow: hidden;
-  min-height: 600px;
-  padding: 85px 0 95px;
+  min-height: 640px;
+  padding: 75px 0 85px;
   background-color: #070c22;
   background-image: linear-gradient(
-      180deg,
-      rgba(7, 12, 34, 0.8) 0%,
-      rgba(7, 12, 34, 0.65) 45%,
-      rgba(7, 12, 34, 0.88) 100%
+      90deg,
+      rgba(6, 12, 34, 0.85) 0%,
+      rgba(6, 12, 34, 0.72) 48%,
+      rgba(6, 12, 34, 0.6) 100%
     ),
     url('/inquiry-bg.jpg');
   background-size: cover;
@@ -35,10 +35,10 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    180deg,
-    rgba(6, 12, 34, 0.82) 0%,
-    rgba(6, 12, 34, 0.65) 40%,
-    rgba(6, 12, 34, 0.9) 100%
+    90deg,
+    rgba(6, 12, 34, 0.86) 0%,
+    rgba(6, 12, 34, 0.65) 50%,
+    rgba(6, 12, 34, 0.45) 100%
   );
 }
 
@@ -46,61 +46,96 @@
 .contact-with-bg__container {
   position: relative;
   z-index: 2;
-  max-width: 980px;
+  max-width: 1220px;
   margin: 0 auto;
+  padding: 0 24px;
 }
 
-/* Section Header over Background */
-.contact-with-bg__header {
-  text-align: center;
-  margin-bottom: 36px;
+/* Split 2-Column Layout (Left Heading, Right Form Card) */
+.contact-split__layout {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 48px;
+  align-items: center;
 }
 
-.contact-with-bg__badge {
+/* ---- LEFT COLUMN: EDITORIAL TYPOGRAPHY MATCHING REFERENCE ---- */
+.contact-split__intro {
+  color: #ffffff;
+}
+
+.contact-split__badge {
   display: inline-block;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: #4ade80;
   background: rgba(34, 197, 94, 0.18);
-  border: 1px solid rgba(34, 197, 94, 0.45);
+  border: 1px solid rgba(74, 222, 128, 0.42);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  padding: 6px 18px;
+  padding: 5px 14px;
   border-radius: 9999px;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
-.contact-with-bg__title {
-  font-family: var(--font-heading);
-  font-size: clamp(2rem, 3.8vw, 2.6rem);
-  font-weight: 800;
+.contact-split__title {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(2.4rem, 4.2vw, 3.4rem);
+  font-weight: 700;
   color: #ffffff;
-  margin-bottom: 10px;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.65);
+  line-height: 1.15;
+  margin: 0 0 18px;
   letter-spacing: -0.01em;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.65);
 }
 
-.contact-with-bg__subtitle {
-  font-size: 15.5px;
+.contact-split__subtitle {
+  font-size: 16px;
   color: rgba(255, 255, 255, 0.92);
-  line-height: 1.6;
-  max-width: 620px;
-  margin: 0 auto;
+  line-height: 1.55;
+  max-width: 440px;
+  margin: 0 0 24px;
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
   font-weight: 400;
 }
 
-/* Planner Card Box with Luxury Glassmorphic Look */
+.contact-split__perks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contact-split__perks li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #f1f5f9;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.contact-split__perks li svg {
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4));
+}
+
+/* ---- RIGHT COLUMN: COMPACT FORM CARD ON THE RIGHT ---- */
+.contact-split__card-wrap {
+  width: 100%;
+}
+
 .contact__planner-box {
-  background: rgba(255, 255, 255, 0.97);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-radius: 24px;
-  border: 1.5px solid rgba(255, 255, 255, 0.85);
-  padding: 44px 48px;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  padding: 26px 28px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.32);
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
@@ -113,8 +148,30 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 5px;
+  height: 4px;
   background: linear-gradient(90deg, #5496f9, #ed0e79, #efa31a, #2e236d);
+}
+
+/* Card Inner Header */
+.contact__planner-card-header {
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.contact__planner-card-title {
+  font-family: var(--font-heading);
+  font-size: 17.5px;
+  font-weight: 800;
+  color: #0e1438;
+  margin: 0 0 3px;
+  letter-spacing: -0.01em;
+}
+
+.contact__planner-card-desc {
+  font-size: 12px;
+  color: #64748b;
+  margin: 0;
 }
 
 .contact__planner-form {
@@ -122,18 +179,18 @@
   flex-direction: column;
 }
 
-/* Grid Layout for Fields */
+/* Compact Grid Layout for Fields */
 .planner__grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 22px;
-  margin-bottom: 30px;
+  gap: 12px 14px;
+  margin-bottom: 20px;
 }
 
 .planner__group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 5px;
 }
 
 .planner__group--full {
@@ -141,40 +198,41 @@
 }
 
 .planner__group label {
-  font-size: 13.5px;
+  font-size: 12px;
   font-weight: 600;
-  color: #0e1438;
-  letter-spacing: 0.02em;
+  color: #1e293b;
+  letter-spacing: 0.01em;
 }
 
-/* Inputs, Selects & Textarea */
+/* Compact Inputs, Selects & Textarea */
 .planner__group input,
 .planner__group select,
 .planner__group textarea {
   width: 100%;
-  height: 48px;
-  padding: 0 16px;
-  font-size: 15px;
+  height: 40px;
+  padding: 0 12px;
+  font-size: 13.5px;
   font-family: inherit;
   color: #0f172a;
   background: #ffffff;
-  border: 1.5px solid #d8dee8;
-  border-radius: 10px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
   outline: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
   box-sizing: border-box;
 }
 
 .planner__group textarea {
-  height: auto;
-  padding: 12px 16px;
+  height: 52px;
+  min-height: 52px;
+  padding: 8px 12px;
   resize: vertical;
-  min-height: 70px;
 }
 
 .planner__group input::placeholder,
 .planner__group textarea::placeholder {
   color: #94a3b8;
+  font-size: 13px;
   font-weight: 400;
 }
 
@@ -186,7 +244,7 @@
 }
 
 .planner__error-msg {
-  font-size: 12px;
+  font-size: 11.5px;
   color: #dc2626;
   font-weight: 500;
   margin: 2px 0 0;
@@ -196,64 +254,65 @@
 .planner__child-ages-container {
   background: #f8fafc;
   border: 1px dashed #cbd5e1;
-  border-radius: 12px;
-  padding: 16px 20px;
-  margin-top: 4px;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-top: 2px;
 }
 
 .planner__child-ages-header {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 6px;
+  margin-bottom: 8px;
 }
 
 .planner__child-ages-title {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   color: #0e1438;
 }
 
 .planner__child-ages-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+  gap: 8px;
 }
 
 .planner__child-age-field {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
 }
 
 .planner__child-age-field label {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   color: #475569;
 }
 
 .planner__child-age-field select {
-  height: 42px;
-  font-size: 14px;
+  height: 34px;
+  font-size: 12.5px;
+  padding: 0 8px;
+  border-radius: 6px;
 }
 
 /* Action Buttons */
 .planner__actions {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 16px;
-  flex-wrap: wrap;
+  gap: 12px;
+  flex-wrap: nowrap;
 }
 
 .planner__btn-wa {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 9px;
-  height: 52px;
-  padding: 0 32px;
-  font-size: 15px;
+  gap: 8px;
+  height: 44px;
+  padding: 0 18px;
+  font-size: 13.5px;
   font-weight: 700;
   font-family: var(--font-heading);
   border-radius: 9999px;
@@ -262,15 +321,17 @@
   border: none;
   cursor: pointer;
   transition: all 0.25s ease;
-  box-shadow: 0 6px 20px rgba(10, 77, 179, 0.35);
+  box-shadow: 0 4px 14px rgba(10, 77, 179, 0.35);
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+  flex: 1.35;
+  white-space: nowrap;
 }
 
 .planner__btn-wa:hover {
   background: linear-gradient(135deg, #0a4db3 0%, #1e40af 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(10, 77, 179, 0.45);
+  transform: translateY(-1.5px);
+  box-shadow: 0 8px 20px rgba(10, 77, 179, 0.45);
 }
 
 .planner__btn-wa:active {
@@ -281,10 +342,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 9px;
-  height: 52px;
-  padding: 0 28px;
-  font-size: 15px;
+  gap: 7px;
+  height: 44px;
+  padding: 0 16px;
+  font-size: 13px;
   font-weight: 700;
   font-family: var(--font-heading);
   border-radius: 9999px;
@@ -295,12 +356,14 @@
   transition: all 0.25s ease;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+  flex: 1;
+  white-space: nowrap;
 }
 
 .planner__btn-email:hover {
   background: #0e1438;
   color: #ffffff;
-  transform: translateY(-2px);
+  transform: translateY(-1.5px);
 }
 
 .planner__btn-email:active {
@@ -308,49 +371,81 @@
 }
 
 /* ---- RESPONSIVE MEDIA QUERIES ---- */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .contact-with-bg {
-    padding: 56px 0 64px;
+    padding: 60px 0 70px;
     background-image: linear-gradient(
         180deg,
         rgba(7, 12, 34, 0.88) 0%,
-        rgba(7, 12, 34, 0.78) 50%,
+        rgba(7, 12, 34, 0.78) 45%,
         rgba(7, 12, 34, 0.92) 100%
       ),
       url('/inquiry-bg.jpg');
   }
 
-  .contact-with-bg__title {
-    font-size: 1.9rem;
+  .contact-with-bg__overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(6, 12, 34, 0.88) 0%,
+      rgba(6, 12, 34, 0.76) 45%,
+      rgba(6, 12, 34, 0.92) 100%
+    );
+  }
+
+  .contact-split__layout {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .contact-split__intro {
+    text-align: center;
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  .contact-split__subtitle {
+    margin: 0 auto 20px;
+  }
+
+  .contact-split__perks {
+    align-items: center;
+    margin: 0 auto;
+  }
+
+  .contact-split__card-wrap {
+    max-width: 580px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 580px) {
+  .contact-with-bg {
+    padding: 50px 0 60px;
+  }
+
+  .contact-split__title {
+    font-size: 2.1rem;
   }
 
   .contact__planner-box {
-    padding: 28px 20px;
-    border-radius: 20px;
+    padding: 20px 16px;
+    border-radius: 16px;
   }
 
   .planner__grid {
     grid-template-columns: 1fr;
-    gap: 16px;
-    margin-bottom: 24px;
-  }
-
-  .planner__group input,
-  .planner__group select {
-    height: 46px;
-    font-size: 14.5px;
+    gap: 12px;
   }
 
   .planner__actions {
     flex-direction: column;
-    gap: 12px;
-    width: 100%;
+    gap: 10px;
   }
 
   .planner__btn-wa,
   .planner__btn-email {
     width: 100%;
-    height: 48px;
-    font-size: 14.5px;
+    flex: none;
+    height: 46px;
   }
 }
