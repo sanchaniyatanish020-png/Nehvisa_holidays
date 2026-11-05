@@ -90,12 +90,6 @@ export default function DestinationPackages({ slug, onBack, onSelectForInquiry }
 
           <h1 className="dest-pkg__hero-title">{destData.fullName}</h1>
           <p className="dest-pkg__hero-tagline">{destData.tagline}</p>
-
-          <div className="dest-pkg__hero-perks">
-            <span>✨ Pure Veg &amp; Jain Food Friendly</span>
-            <span>✈️ Flight &amp; Visa Assistance from Surat</span>
-            <span>⭐ Personalized Day-by-Day Itineraries</span>
-          </div>
         </div>
       </header>
 
