@@ -2,9 +2,19 @@ import businessInfo from '../data/businessInfo';
 import './PromoBanner.css';
 
 export default function PromoBanner() {
-  const handleDealClick = (dealName, minPrice) => {
-    const message = `Hello Nehvisa Holidays, I am interested in the "${dealName}" offer starting ${minPrice}. Please share itinerary details.`;
-    window.open(`${businessInfo.whatsappLink}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+  const handleDealClick = (destName) => {
+    window.dispatchEvent(
+      new CustomEvent('select-destination', {
+        detail: { destinationName: destName },
+      })
+    );
+    const destEl = document.getElementById('destinations');
+    if (destEl) {
+      destEl.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      const message = `Hello Nehvisa Holidays, I am interested in planning a holiday trip to ${destName}. Please share itinerary details.`;
+      window.open(`${businessInfo.whatsappLink}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+    }
   };
 
   return (
@@ -108,43 +118,43 @@ export default function PromoBanner() {
               </h2>
             </div>
 
-            {/* 3-Column Deals Pill Box */}
-            <div className="promo-banner__deals-box" role="group" aria-label="Holiday package price deals">
-              {/* Deal 1 */}
+            {/* 3-Column Deals Pill Box: Exact Website Destinations without Price */}
+            <div className="promo-banner__deals-box" role="group" aria-label="Featured holiday destinations">
+              {/* Destination 1: Dubai */}
               <button
                 type="button"
                 className="promo-banner__deal-item"
-                onClick={() => handleDealClick('World Tours', '₹80,000')}
-                title="Inquire about World Tours on WhatsApp"
+                onClick={() => handleDealClick('Dubai')}
+                title="Explore Dubai Packages"
               >
-                <span className="promo-banner__deal-title">World Tours</span>
-                <span className="promo-banner__deal-price">From ₹80,000</span>
+                <span className="promo-banner__deal-title">Dubai</span>
+                <span className="promo-banner__deal-price">Custom Package</span>
               </button>
 
               <div className="promo-banner__divider" aria-hidden="true" />
 
-              {/* Deal 2 */}
+              {/* Destination 2: Bali */}
               <button
                 type="button"
                 className="promo-banner__deal-item"
-                onClick={() => handleDealClick('Dubai & Asia Tours', '₹35,000')}
-                title="Inquire about Asia Tours on WhatsApp"
+                onClick={() => handleDealClick('Bali / Indonesia')}
+                title="Explore Bali Packages"
               >
-                <span className="promo-banner__deal-title">Asia Tours</span>
-                <span className="promo-banner__deal-price">From ₹35,000</span>
+                <span className="promo-banner__deal-title">Bali</span>
+                <span className="promo-banner__deal-price">Custom Package</span>
               </button>
 
               <div className="promo-banner__divider" aria-hidden="true" />
 
-              {/* Deal 3 with Special Badge */}
+              {/* Destination 3: Vietnam with Special Badge */}
               <button
                 type="button"
                 className="promo-banner__deal-item promo-banner__deal-item--featured"
-                onClick={() => handleDealClick('Thailand Special Package', '₹49,000')}
-                title="Inquire about Thailand Special on WhatsApp"
+                onClick={() => handleDealClick('Vietnam')}
+                title="Explore Vietnam Packages"
               >
-                <span className="promo-banner__deal-title">Thailand</span>
-                <span className="promo-banner__deal-price">From ₹49,000</span>
+                <span className="promo-banner__deal-title">Vietnam</span>
+                <span className="promo-banner__deal-price">Custom Package</span>
                 <span className="promo-banner__deal-badge">Special Offer</span>
               </button>
             </div>
@@ -154,3 +164,4 @@ export default function PromoBanner() {
     </section>
   );
 }
+
