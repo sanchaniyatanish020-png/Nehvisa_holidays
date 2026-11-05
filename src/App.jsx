@@ -4,7 +4,6 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 
 // Code-split below-the-fold sections for instant FCP and LCP
-const AirlinesTicker = lazy(() => import('./components/AirlinesTicker'));
 const PromoBanner = lazy(() => import('./components/PromoBanner'));
 const About = lazy(() => import('./components/About'));
 const Services = lazy(() => import('./components/Services'));
@@ -22,7 +21,6 @@ export default function App() {
       <main>
         <Hero />
         <Suspense fallback={<div style={{ minHeight: '60vh' }} />}>
-          <AirlinesTicker />
           <PromoBanner />
           <About />
           <Services />
